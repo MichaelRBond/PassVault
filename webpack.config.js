@@ -10,14 +10,14 @@ const paths = {
 };
 
 module.exports = {
-  entry: ['./src/index.tsx'],
+  entry: ["./src/index.tsx"],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.js', '.ts', '.tsx'],
+    extensions: ['.js', '.ts', '.tsx', '.css'],
     modules: [
       paths.src,
       paths.node_modules,
