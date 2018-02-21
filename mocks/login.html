@@ -5,72 +5,63 @@
     <title>PassVault</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-   <link rel="stylesheet" href="material.min.css">
-   <link rel="stylesheet" href="bulma.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <link rel="stylesheet" href="override.css">
+    <script>
+    
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+       </script>
   </head>
   <body bgcolor="eeeeee">
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header mdl-color--grey-200 no-box-shadow">
-      <div class="mdl-layout__header-row">
-        <!-- Add spacer, to align navigation to the right -->
-        <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
-        <nav class="mdl-navigation">
-          <a class="mdl-navigation__link mdl-color-text--grey-900" href=""> <i class="fas fa-cog"></i></a>
-        </nav>
-      </div>
-    </header>
-    <main class="mdl-layout__content mdl-color--grey-200">
-      <div class="page-content">
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--12-col center-text"><img src="passvaultlogo.png"></div>
-            <div class="mdl-cell mdl-cell--12-col center-text">
-
-              <div class="dropdown is-active">
-                <div class="dropdown-trigger">
-                  <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
-                    <span>Content</span>
-                    <span class="icon is-small">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu2" role="menu">
-                  <div class="dropdown-content">
-                    <div class="dropdown-item">
-                      <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
-                    </div>
-                    <hr class="dropdown-divider">
-                    <div class="dropdown-item">
-                      <p>You simply need to use a <code>&lt;div&gt;</code> instead.</p>
-                    </div>
-                    <hr class="dropdown-divider">
-                    <a href="#" class="dropdown-item">
-                      This is a link
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-
-
-    </div>
-  </div>
-</div>
-
-            </div>
-          <div class="mdl-cell mdl-cell--12-col center-text">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored big-button">
-              Save
-            </button>
-          </div>
+    <div class="container">
+      <nav class="z-depth-0">
+        <div class="nav-wrapper grey lighten-3  ">
+          <a href="#" class="right"><i class="fas fa-cog grey-text text-darken-2"></i></a>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col s12 center-align">
+            <img src="passvaultlogo.png">
+        </div>
+        <div class="col s12">
+          <div class="input-field col s12 center-align">
+              <select>
+                <option value="" disabled selected>Select your auth type</option>
+                <option value="1">Userpass</option>
+                <option value="1">Otka</option>
+                <option value="2">Github</option>
+                <option value="3">Token</option>
+              </select>
           </div>
         </div>
+        <div class="col s12 center-align pad-top-20">
+                <div class="input-field col s12">
+                  <input placeholder="Username" id="username" type="text" class="validate">
+                </div>
+        </div>
+        <div class="col s12 center-align">
+            <div class="input-field col s12">
+              <input placeholder="Password" id="first_name" type="password" class="validate">
+            </div>
       </div>
-    </main>
-  </div>
-
+      <div class="col s12 center-align">
+          <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+          <label for="filled-in-box">Remember User?</label>
+          <input type="checkbox" class="filled-in" id="filled-in-box2"/>
+          <label for="filled-in-box2">Remember Password?</label>
+      </div>
+      <div class="col s12 center-align pad-top-50">
+          <a class="waves-effect waves-light btn big-button">Login</a>
+      </div>
+    </div>
+    </div>
   </body>
 </html>

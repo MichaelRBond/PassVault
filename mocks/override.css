@@ -26,3 +26,15 @@
   min-width: 28px;
   min-height: 28px;
 }
+
+.pad-top-20 {
+  margin-top: 20px;
+}
+
+.pad-top-50 {
+  margin-top: 50px;
+}
+
+.pad-right-20 {
+  margin-right: 20px;
+}
