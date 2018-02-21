@@ -1,0 +1,20 @@
+.chrome {
+    width: 350px;
+    height: 520px;
+
+    background: rgb(243,243,243);	
+    border-radius: 2px;
+    filter: drop-shadow(0 0 0.75rem rgba(0,0,0,0.24));
+
+    .mdl-navigation__link {
+        color: black;
+    }
+
+    .mdl-layout__header-row {
+        padding-right: 10px;
+    }
+
+    .mdl-layout-title {
+        //background: url('../../../../mocks/passvaultlogo.png');
+    }
+}
