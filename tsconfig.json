@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es5", // So we don't need to use Babel to go from es6 => es5 for browser support.
+    "lib": [ "es2015" ],
+    "declaration": false,
+    "jsx": "react",
+    "module": "commonjs",
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "baseUrl": "./src",
+    "experimentalDecorators": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "skipLibCheck": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "build"
+  ],
+  "filesGlob": [
+    "**/*.ts",
+    "**/*.tsx",
+    "!node_modules",
+    "node_modules/@types",
+    "node_modules/@moveinc/prosoft-components"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "extends": "tslint:recommended",
+  "rules" : {
+    "no-var-requires": false,
+    "no-console": true,
+    "object-literal-sort-keys": false,
+    "ordered-imports": true,
+    "max-classes-per-file": [true, 1],
+    "interface-name": [true, "never-prefix"],
+    "no-unused-expression": false,
+    "no-unused-expression-chai": true,
+    "ban-types": {
+      "options": [
+        ["Object", "Avoid using the `Object` type. Did you mean `object`?"],
+        ["Boolean", "Avoid using the `Boolean` type. Did you mean `boolean`?"],
+        ["Number", "Avoid using the `Number` type. Did you mean `number`?"],
+        ["String", "Avoid using the `String` type. Did you mean `string`?"],
+        ["Symbol", "Avoid using the `Symbol` type. Did you mean `symbol`?"]
+      ]
+    },
+    "await-promise": [true, "Bluebird", "RequestPromise"],
+    "no-floating-promises": [true, "Bluebird", "RequestPromise"],
+    "no-for-in-array": true,
+    "no-unnecessary-type-assertion": true,
+    "cyclomatic-complexity": [true, 15],
+    "deprecation": true,
+    "eofline": true,
+    "no-unnecessary-callback-wrapper": true,
+    "member-ordering": {
+      "options": {
+        "order": [
+          "public-static-field",
+          "private-static-field",
+          "public-instance-field",
+          "private-instance-field",
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "public-instance-method",
+          "private-instance-method",
+          "public-static-method",
+          "private-static-method"
+        ]
+      }
+    }
+  },
+  "jsRules": {
+    "curly": true
+  },
+  "rulesDirectory": [
+    "node_modules/tslint-no-unused-expression-chai/rules"
+  ]
+}

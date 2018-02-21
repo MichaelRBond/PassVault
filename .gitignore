@@ -1,0 +1,11 @@
+.build/
+build/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+src/**/*.map
+src/**/*.js
+
+.DS_Store/
+.DS_Store
