@@ -42,7 +42,7 @@ export default class extends React.Component<ComponentProps, {}> {
               <RoundButton text={'Test Connection'} onclickHandler={(e: Event) => { this.handleTestConnection(e) }}/>
             </div>
             <div className="mdl-cell mdl-cell--12-col center-text">
-              <ConfirmButton type={'large'} text={'Save'} onclickHandler={(e: Event) => { this.handleConfirm(e)}}/>
+              <ConfirmButton text={'Save'} onclickHandler={(e: Event) => { this.handleConfirm(e)}}/>
             </div>
           </div>
         </div>

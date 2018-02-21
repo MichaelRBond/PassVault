@@ -18,7 +18,7 @@
     "@types/chai": "^4.0.10",
     "@types/jest": "^22.0.1",
     "@types/mocha": "^2.2.44",
-    "@types/react": "^16.0.30",
+    "@types/react": "^16.0.38",
     "@types/react-bootstrap": "^0.32.1",
     "@types/react-dom": "^0.14.22",
     "babel-core": "^6.26.0",

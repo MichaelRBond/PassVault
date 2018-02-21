@@ -14,20 +14,17 @@ export default class Ballista extends React.Component<{}, {}> {
       <form>
         <p>Hello, World!</p>
         <ConfirmButton
-          type="large"
           text="click me"
           onclickHandler={(): void => {
             logger.info("clicked!");
           }}
         />
         <CancelButtonSmall
-          type="small"
           onclickHandler={(): void => {
             logger.info("Cancelled!");
           }}
         />
         <ConfirmButton
-          type="small"
           text="click me"
           onclickHandler={(): void => {
             logger.info("clicked!");

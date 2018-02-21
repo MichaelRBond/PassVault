@@ -1,7 +1,6 @@
 import * as React from "react";
 
 interface ComponentProps {
-  type: "small" | "large";
   text: string;
   onclickHandler: any; // TODO : Type better
 }
