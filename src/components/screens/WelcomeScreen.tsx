@@ -3,6 +3,8 @@ import * as React from "react";
 import ConfirmButton from '../elements/ConfirmButton';
 import RoundButton from '../elements/RoundButton';
 
+const logo = require('./passvaultlogo.png');
+
 interface ComponentProps {
   handleTestConnection?: any;
   handleConfirm?: any;
@@ -26,7 +28,7 @@ export default class extends React.Component<ComponentProps, {}> {
        <main className="mdl-layout__content mdl-color--grey-200">
         <div className="page-content">
           <div className="mdl-grid">
-            <div className="mdl-cell mdl-cell--12-col center-text"><img src="passvaultlogo.png" /></div>
+            <div className="mdl-cell mdl-cell--12-col center-text"><img src={logo} /></div>
             <div className="mdl-cell mdl-cell--12-col">
               <p className="center-text">Welcome to PassVault</p>
               <p className="center-text">Please configure the Vault server to connect to for password storage. You can return to change these settings at any point by clicking the options button in the top right corner</p>
