@@ -9,3 +9,6 @@ src/**/*.js
 
 .DS_Store/
 .DS_Store
+
+test-vault/data/logs/*
+test-vault/data/logs
