@@ -15,7 +15,7 @@ export default class CancelButtonSmall extends React.Component<ComponentProps, {
     const display = (
       <button
         onClick={this.props.onclickHandler}
-        className={`cancel-button-${this.props.type}`}
+        className={`mdl-button mdl-js-button mdl-button--raised mdl-button--accent cancel-button-${this.props.type}`}
       >
         Cancel
       </button>

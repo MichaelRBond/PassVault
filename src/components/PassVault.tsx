@@ -3,6 +3,7 @@ import {Logger} from "../utils/logger";
 import CancelButtonSmall from "./elements/CancelButton";
 import Checkbox from "./elements/Checkbox";
 import ConfirmButton from "./elements/ConfirmButton";
+import TextInput from "./elements/TextInput";
 
 const logger = new Logger("PassVault");
 
@@ -39,6 +40,15 @@ export default class Ballista extends React.Component<{}, {}> {
             label="Test Checkbox"
             onChangeHandler={(checked: any): void => {
               logger.info("checkbox changed!", checked);
+            }}
+          />
+        </div>
+        <div>
+          <TextInput
+            id="foo-text"
+            label="test ..."
+            onChangeHandler={(text: any): void => {
+              logger.info("text changed!", text.currentTarget.value);
             }}
           />
         </div>

@@ -1,6 +1,6 @@
 export default interface Password {
-    url: string;
+    url?: string;
     username: string;
     password: string;
-    notes: string;
+    notes?: string;
 }
