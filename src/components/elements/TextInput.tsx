@@ -14,19 +14,9 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
 
   public render() {
     const display = (
-      <div className="mdl-textfield mdl-js-textfield">
-        <input
-          className="mdl-textfield__input"
-          type="text"
-          id={this.props.id}
-          onChange={this.props.onChangeHandler}
-        />
-        <label
-          className="mdl-textfield__label"
-          htmlFor={this.props.id}
-        >
-          {this.props.label}
-        </label>
+      <div className="input-field col s6">
+        <input id={this.props.id} type="text" className="validate"/>
+        <label htmlFor={this.props.id}>{this.props.label}</label>
       </div>
     );
     return display;

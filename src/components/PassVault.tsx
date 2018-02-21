@@ -11,7 +11,7 @@ export default class Ballista extends React.Component<{}, {}> {
 
   public render() {
     const display = (
-      <div>
+      <form>
         <p>Hello, World!</p>
         <ConfirmButton
           type="large"
@@ -52,7 +52,7 @@ export default class Ballista extends React.Component<{}, {}> {
             }}
           />
         </div>
-      </div>
+      </form>
     );
     return display;
   }

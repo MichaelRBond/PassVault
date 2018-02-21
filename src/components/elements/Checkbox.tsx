@@ -28,16 +28,16 @@ export default class Checkbox extends React.Component<ComponentProps, ComponentS
   public render() {
 
     const display = (
-      <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor={this.state.id}>
+      <span>
         <input
           type="checkbox"
           id={this.state.id}
-          className="mdl-checkbox__input"
           checked={this.state.checked}
+          className="filled-in"
           onChange={(e) => this.handleChange(this.state.id)}
         />
-        <span className="mdl-checkbox__label">{this.props.label}</span>
-      </label>
+        <label htmlFor={this.state.id}>{this.props.label}</label>
+      </span>
     );
 
     return display;

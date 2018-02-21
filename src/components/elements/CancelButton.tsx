@@ -13,12 +13,12 @@ export default class CancelButtonSmall extends React.Component<ComponentProps, {
 
   public render() {
     const display = (
-      <button
+      <a
         onClick={this.props.onclickHandler}
-        className={`mdl-button mdl-js-button mdl-button--raised mdl-button--accent cancel-button-${this.props.type}`}
+        className="waves-effect waves-light btn grey lighten-1"
       >
         Cancel
-      </button>
+      </a>
     );
     return display;
   }

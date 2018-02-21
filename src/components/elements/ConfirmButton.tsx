@@ -14,12 +14,12 @@ export default class ConfirmButtonLarge extends React.Component<ComponentProps, 
 
   public render() {
     const display = (
-      <button
-        className={`mdl-button mdl-js-button mdl-button--raised mdl-button--colored confirm-button-${this.props.type}`}
+      <a
+        className={`waves-effect waves-light btn`}
         onClick={this.props.onclickHandler}
         >
         {this.props.text}
-      </button>
+      </a>
     );
     return display;
   }
