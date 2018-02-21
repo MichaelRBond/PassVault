@@ -1,6 +1,7 @@
 import * as React from "react";
 
 interface ComponentProps {
+  type: "small" | "large";
   text: string;
   onclickHandler: any; // TODO : Type better
 }
@@ -15,7 +16,7 @@ export default class ConfirmButtonLarge extends React.Component<ComponentProps, 
     const display = (
       <button
         onClick={this.props.onclickHandler}
-        className="confirm-button-large"
+        className={`confirm-button-${this.props.type}`}
       >
         {this.props.text}
       </button>
