@@ -19,3 +19,32 @@
   width: 100px;
   font-size: 12pt;
 }
+
+.no-box-shadow {
+  box-shadow: none;
+}
+
+.mdl-layout {
+  align-items: center;
+  justify-content: center;
+}
+
+.center-text {
+   text-align: center;
+}
+
+.cyan-override-bg {
+  background: rgb(0,150,136);
+}
+
+.big-button {
+  width: 270px;
+  height: 45px;
+}
+
+.small-circle-button {
+  height: 28px;
+  width: 28px;
+  min-width: 28px;
+  min-height: 28px;
+}

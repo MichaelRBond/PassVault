@@ -15,9 +15,9 @@ export default class ConfirmButtonLarge extends React.Component<ComponentProps, 
   public render() {
     const display = (
       <button
+        className={`mdl-button mdl-js-button mdl-button--raised mdl-button--colored confirm-button-${this.props.type}`}
         onClick={this.props.onclickHandler}
-        className={`confirm-button-${this.props.type}`}
-      >
+        >
         {this.props.text}
       </button>
     );
