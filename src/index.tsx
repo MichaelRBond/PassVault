@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import PassVault from "./components/PassVault";
-import "materialize-loader";
 
 import * as promise from "es6-promise";
-import "./styles/app.scss";
+
+import './style.tsx';
 
 declare var document: any; // TODO : type better????
 promise.polyfill();

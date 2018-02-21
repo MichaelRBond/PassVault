@@ -6,7 +6,7 @@ function loadStories() {
   req.keys().forEach((filename) => req(filename))
 }
 
-import styles from '../src/styles/app.scss'
+import "../src/style.tsx";
 
 configure(loadStories, module);
 
