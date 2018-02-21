@@ -17,7 +17,9 @@ export default class extends React.Component {
             </ul>
           </div>
         </nav>
+        <div className="chrome-content">
           {this.props.children}
+        </div>
       </div>
     );
   }
