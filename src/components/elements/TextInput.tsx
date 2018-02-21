@@ -1,5 +1,7 @@
 import * as React from "react";
 
+declare var $: any;
+
 interface ComponentProps {
   id: string;
   label: string;
@@ -10,6 +12,10 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
 
   constructor(props: ComponentProps) {
     super(props);
+  }
+
+  componentDidMount() {
+    $(`#${this.props.id}`).material_textbox();
   }
 
   public render() {

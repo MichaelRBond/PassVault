@@ -5,15 +5,19 @@ interface ComponentProps {
   onclickHandler: any;
 }
 
-export default class extends React.Component<ComponentProps, {}> {
-  render() {
+export default class RoundButton extends React.Component<ComponentProps, any> {
+  constructor(props: ComponentProps) {
+    super(props);
+  }
+
+  public render() {
     return (
       <div>
-      <button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-color--teal small-circle-button ">
-      <i className="material-icons">refresh</i>
-      </button>
+      <a className="btn-floating teal">
+        <i className="material-icons">refresh</i>
+      </a>
       {this.props.text}
       </div>
     );
   }
-};
+}

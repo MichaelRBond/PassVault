@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import './Chrome.scss';
+import "./Chrome.scss";
 
 export default class extends React.Component {
-  render() {
+  public render() {
     return (
       <div className="chrome">
         <nav>
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li className='settings'>
+            <li className="settings">
               <a href="#/settings">
                 <i className="large material-icons black-text">settings</i>
               </a>

@@ -1,55 +1,17 @@
 import * as React from "react";
-import {Logger} from "../utils/logger";
-import CancelButtonSmall from "./elements/CancelButton";
-import Checkbox from "./elements/Checkbox";
-import ConfirmButton from "./elements/ConfirmButton";
-import TextInput from "./elements/TextInput";
+import Chrome from "./Chrome";
+import WelcomeScreen from "./screens/WelcomeScreen";
 
-const logger = new Logger("PassVault");
+interface ComponentState {
+  vaultUrl: string;
+}
 
-export default class Ballista extends React.Component<{}, {}> {
-
+export default class PassVault extends React.Component<{}, ComponentState> {
   public render() {
     const display = (
-      <form>
-        <p>Hello, World!</p>
-        <ConfirmButton
-          text="click me"
-          onclickHandler={(): void => {
-            logger.info("clicked!");
-          }}
-        />
-        <CancelButtonSmall
-          onclickHandler={(): void => {
-            logger.info("Cancelled!");
-          }}
-        />
-        <ConfirmButton
-          text="click me"
-          onclickHandler={(): void => {
-            logger.info("clicked!");
-          }}
-        />
-        <div>
-          <Checkbox
-            id="foo-checkbox"
-            checked={true}
-            label="Test Checkbox"
-            onChangeHandler={(checked: any): void => {
-              logger.info("checkbox changed!", checked);
-            }}
-          />
-        </div>
-        <div>
-          <TextInput
-            id="foo-text"
-            label="test ..."
-            onChangeHandler={(text: any): void => {
-              logger.info("text changed!", text.currentTarget.value);
-            }}
-          />
-        </div>
-      </form>
+      <Chrome>
+        <WelcomeScreen handleConfirm={(url: string) => { this.setState({...this.state, vaultUrl: url}); }} />
+      </Chrome>
     );
     return display;
   }

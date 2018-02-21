@@ -4,7 +4,7 @@ import PassVault from "./components/PassVault";
 
 import * as promise from "es6-promise";
 
-import './style.tsx';
+import "./style.tsx";
 
 declare var document: any; // TODO : type better????
 promise.polyfill();
