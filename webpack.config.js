@@ -17,7 +17,7 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.css'],
+    extensions: ['.js', '.ts', '.tsx', '.css', '.scss'],
     modules: [
       paths.src,
       paths.node_modules,
@@ -43,6 +43,16 @@ module.exports = {
         loaders: [
           'ts-loader'
         ]
+      },
+      {
+        test: /\.scss$/,
+        use: [{
+            loader: "style-loader" // creates style nodes from JS strings
+        }, {
+            loader: "css-loader" // translates CSS into CommonJS
+        }, {
+            loader: "sass-loader" // compiles Sass to CSS
+        }]
       }
     ]
   },
