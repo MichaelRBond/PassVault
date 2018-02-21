@@ -1,0 +1,36 @@
+{
+    "description": "Vault password manager",
+    "manifest_version": 2,
+    "name": "PassVault",
+    "version": "1.0.0",
+    "homepage_url": "https://gitlab.com/nyxcharon/passvault",
+    "icons": {
+      "64": "icon-64.png"
+    },
+    "content_security_policy": "default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "commands": {
+      "_execute_browser_action": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+L",
+          "windows": "Ctrl+Shift+L",
+          "mac": "Command+Shift+L",
+          "chromeos": "Ctrl+Shift+L",
+          "linux": "Ctrl+Shift+L"
+        }
+      }
+    },
+    "permissions": [
+      "activeTab"
+    ],
+    "browser_action": {
+      "default_title": "PassVault",
+      "default_icon": "icon-32.png",
+      "default_popup": "index.html"
+    },
+    "applications": {
+      "gecko": {
+        "id": "passvault@nyxcharon.com"
+      }
+    }
+  }
+  
