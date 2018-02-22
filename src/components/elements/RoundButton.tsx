@@ -12,12 +12,11 @@ export default class RoundButton extends React.Component<ComponentProps, any> {
 
   public render() {
     return (
-      <div>
-      <a className="btn-floating teal">
-        <i className="material-icons">refresh</i>
-      </a>
-      {this.props.text}
-      </div>
+      <h6>
+        <a className="btn-floating teal" onClick={this.props.onclickHandler}>
+          <i className="small material-icons">refresh</i>
+        </a>  {this.props.text}
+      </h6>
     );
   }
 }

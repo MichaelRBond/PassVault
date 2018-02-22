@@ -80,4 +80,12 @@ export default class Vault {
 
         return client;
     }
+
+    public static testConnection(hostname: string): Promise<boolean> {
+        return axios.get(`${hostname}/v1/sys/health?standbyok`).then(() => {
+            return true;
+        }).catch(() => {
+            return false;
+        });
+    }
 }
