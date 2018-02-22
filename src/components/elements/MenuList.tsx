@@ -3,13 +3,13 @@ import * as React from "react";
 import "../../styles/MenuList.scss";
 
 interface ComponentProps {
-  items?: Item[];
+  items: Item[];
 }
 
 interface Item {
     title: string;
     icon: string;
-    href: string;
+    content: any;
 }
 
 export default class extends React.Component<ComponentProps, {}> {
@@ -17,19 +17,27 @@ export default class extends React.Component<ComponentProps, {}> {
   public render() {
     const items = this.props.items.map((i) => {
       return (
-          <a className="collection-item grey-text darken-4" href="#">
-          <i className="material-icons left">{i.icon}</i>
-          {i.title}
-          <i className="material-icons right">chevron_right</i>
-        </a>
+        <li>
+          <div className="collapsible-header">
+            <i className="material-icons left">{i.icon}</i>
+            {i.title}
+            <i className="material-icons right">chevron_right</i>
+          </div>
+          <div className="collapsible-body">
+            {i.content}
+          </div>
+        </li>
+        // <a className="collection-item grey-text darken-4" href="#">
+        //   <i className="material-icons left">{i.icon}</i>
+        //   {i.title}
+        //   <i className="material-icons right">chevron_right</i>
+        // </a>
       );
     });
     return (
-      <div className="menu-list">
-        <div className="collection">
-          {items}
-        </div>
-      </div>
+      <ul className="collapsible" data-collapsible="accordion">
+        {items}
+      </ul>
     );
   }
 }

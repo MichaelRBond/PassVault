@@ -1,54 +1,75 @@
-import axios from "axios";
-import { AxiosInstance, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import { HttpClient } from "../utils/http";
 import { Logger } from "../utils/logger";
-import Password from "./password";
 
 export default class Vault {
-    private axiosClient: AxiosInstance;
-    private logger: Logger;
+    // FIXME: Saving username state here will make it harder to have multiple valut servers configured
     private username: string;
+    private token: string;
 
-    public constructor(url: string) {
-        this.axiosClient = axios.create({
-            baseURL: `${url}/v1`,
-        });
-        this.logger = new Logger("vault-client");
+    public constructor(
+        private http: HttpClient,
+        private url: string,
+        private logger: Logger = new Logger("vault-client"),
+    ) { }
+
+    public async login(username: string, password: string): Promise<void> {
+        const requestParams = {
+            baseURL: `${this.url}/v1`,
+            url: `/auth/userpass/login/${username}`,
+            method: "POST",
+            headers: {
+                "X-Vault-Token": this.token,
+            },
+            data: {password},
+        };
+        const result = await this.http.request(requestParams);
+        this.logger.info(`Logged in to vault as user ${username}`);
+        this.token = result.data.auth.client_token;
+        this.username = username;
     }
 
-    public login(username: string, password: string): Promise<void> {
-        return this.axiosClient.post(`/auth/userpass/login/${username}`, {password})
-            .then((response) => {
-                this.logger.info(`Logged in to vault as user ${username}`);
-                this.token = response.data.auth.client_token;
-                this.username = username;
-            });
+    public getUsername(): string {
+        return this.username;
     }
 
+    // TODO : These should not be axios response types. Return `result.data` and type
+    // the return better
     public read(path: string): Promise<AxiosResponse> {
-        return this.axiosClient.get(`/${path}`);
+        return this.http.request({
+            baseURL: `${this.url}/v1`,
+            url: `/${path}`,
+            method: "GET",
+            headers: {
+                "X-Vault-Token": this.token,
+            },
+        });
     }
 
+    // TODO : These should not be axios response types. Return `result.data` and type
+    // the return better
     public write(path: string, data?: any): Promise<AxiosResponse> {
-        return this.axiosClient.post(`/${path}`, data);
+        return this.http.request({
+            baseURL: `${this.url}/v1`,
+            url: `/${path}`,
+            method: "POST",
+            headers: {
+                "X-Vault-Token": this.token,
+            },
+            data,
+        });
     }
 
-    public list(path: string): Promise<string[]> {
-        return this.axiosClient.request({
+    public async list(path: string): Promise<string[]> {
+        const result = await this.http.request({
+            baseURL: `${this.url}/v1`,
             method: "LIST",
             url: `/${path}`,
-        }).then((response) => {
-            return response.data.data.keys;
+            headers: {
+                "X-Vault-Token": this.token,
+            },
         });
-    }
-
-    public getPassword(path: string): Promise<Password> {
-        return this.read(path).then((response) => {
-            return response.data.data;
-        });
-    }
-
-    public savePassword(path: string, password: Password): Promise<AxiosResponse> {
-        return this.write(path, password);
+        return result.data.data.keys;
     }
 
     public listTotp(): Promise<string[]> {
@@ -65,19 +86,20 @@ export default class Vault {
         });
     }
 
-    public set token(token: string) {
-        this.axiosClient.defaults.headers.common["X-Vault-Token"] = token;
+    public setUsername(username: string): void {
+        this.username = username;
+        return;
     }
 
-    public get token(): string {
-        return this.axiosClient.defaults.headers.common["X-Vault-Token"];
+    public setToken(token: string): void {
+        this.token = token;
+        return;
     }
+}
 
-    public static restore(url: string, token: string, username: string): Vault {
-        const client = new Vault(url);
-        client.token = token;
-        client.username = username;
-
-        return client;
-    }
+export function restoreVaultClient(http: HttpClient, url: string, token: string, username: string): Vault {
+    const vault = new Vault(http, url);
+    vault.setUsername(username); // TODO : Remove state from client
+    vault.setToken(token); // TODO : remove state from client
+    return vault;
 }
