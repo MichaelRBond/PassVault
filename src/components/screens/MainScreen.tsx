@@ -25,10 +25,14 @@ export default class extends React.Component<ComponentProps, ComponentState> {
   }
 
   public async componentDidMount(): Promise<void> {
+    const [favorites, notes] = await Promise.all([
+      this.getFavorites(),
+      this.getNotes(),
+    ]);
     this.setState({
       ...this.state,
-      favorites: await this.getFavorites(),
-      notes: await this.getNotes(),
+      favorites,
+      notes,
     });
   }
 
@@ -83,9 +87,8 @@ export default class extends React.Component<ComponentProps, ComponentState> {
 
   // TODO : Type return better
   private async getFavorites(): Promise<string> {
-    // const favorites = ["stings", "gtos", "tototot"];
-
-    return "these are my favosdfsfdrites";
+    const favorites = await this.props.vault.getFavorites();
+    return favorites.join(" -- ");
   }
 
   private async getNotes(): Promise<string> {

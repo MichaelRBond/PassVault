@@ -1,9 +1,9 @@
 import * as React from "react";
+import Vault from "../../vault";
 import Checkbox from "../elements/Checkbox";
 import ConfirmButton from "../elements/ConfirmButton";
-import TextInput from "../elements/TextInput";
 import SelectBox from "../elements/SelectBox";
-import Vault from "../../vault";
+import TextInput from "../elements/TextInput";
 
 const logo = require("./passvaultlogo.png");
 
@@ -37,17 +37,17 @@ export default class LoginScreen extends React.Component<ComponentProps, {}> {
                           {
                             label: "Select your auth method",
                             disabled: true,
-                            selected: true
+                            selected: true,
                           },
                           {
-                            label: "Github"
+                            label: "Github",
                           },
                           {
-                            label: "Token"
+                            label: "Token",
                           },
                           {
-                            label: "Userpass"
-                          }
+                            label: "Userpass",
+                          },
                         ]}/>
                     </div>
                 </div>

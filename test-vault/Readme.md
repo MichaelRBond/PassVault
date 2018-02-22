@@ -32,4 +32,6 @@ vault auth $ROOT_TOKEN
 ./populate-vault
 ```
 
+## CORs
 
+`vault write sys/config/cors enabled=true allowed_origins='*'`
