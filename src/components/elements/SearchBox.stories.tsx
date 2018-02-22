@@ -1,15 +1,15 @@
+import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { storiesOf } from '@storybook/react';
 
-import Chrome from '../Chrome';
-import SearchBox from './SearchBox';
+import Chrome from "../Chrome";
+import SearchBox from "./SearchBox";
 
-storiesOf('SearchBox', module)
-  .add('with chrome', () => (
+storiesOf("SearchBox", module)
+  .add("with chrome", () => (
       <Chrome>
-        <SearchBox 
-          id={'search'}
+        <SearchBox
+          id={"search"}
           placeholder="Search the internet for butts"
         />
       </Chrome>
-  ))
+  ));

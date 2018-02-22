@@ -1,20 +1,21 @@
+import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { storiesOf } from '@storybook/react';
 
-import Chrome from '../Chrome';
-import MenuList from './MenuList';
+import Chrome from "../Chrome";
+import MenuList from "./MenuList";
 
-storiesOf('MenuList', module)
-  .add('with chrome', () => (
+storiesOf("MenuList", module)
+  .add("with chrome", () => (
       <Chrome>
         <MenuList items={[{
           title: "Favorites",
           icon: "favorite",
-          href: "#/favorites"
-        },{
+          href: "#/favorites",
+        },
+        {
           title: "Notes",
           icon: "insert_drive_file",
-          href: "#/notes"
+          href: "#/notes",
         }]}/>
       </Chrome>
-  ))
+  ));

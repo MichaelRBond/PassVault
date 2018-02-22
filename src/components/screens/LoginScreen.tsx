@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const logo = require('./passvaultlogo.png');
+const logo = require("./passvaultlogo.png");
 
 interface ComponentProps {
   handleTestConnection?: any;
@@ -8,46 +8,46 @@ interface ComponentProps {
 }
 
 interface ComponentState {
-  url: string
+  url: string;
 }
 
 export default class LoginScreen extends React.Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
     super(props);
     this.state = {
-      url: ""
+      url: "",
     };
 
     this.updateUrl = this.updateUrl.bind(this);
   }
 
-  handleTestConnection(e: Event) {
-    if(this.props.handleTestConnection) {
+  public handleTestConnection(e: Event) {
+    if (this.props.handleTestConnection) {
       this.props.handleTestConnection(e);
     }
   }
 
-  handleConfirm(e: Event) {
-    if(this.props.handleConfirm) {
+  public handleConfirm(e: Event) {
+    if (this.props.handleConfirm) {
       this.props.handleConfirm(this.state.url);
     }
   }
 
-  updateUrl(e: React.ChangeEvent<HTMLInputElement>) {
+  public updateUrl(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({
       ...this.state,
       url: (e.currentTarget as any).value,
     });
   }
 
-  render() {
+  public render() {
     return (
        <main>
         <div className="page-content">
           <div>
             <div className="center-text">
               <img src={logo} />
-            </div>     
+            </div>
             <div className="row">
                 <div className="col s12">
                     <div className="input-field col s12 center-align">

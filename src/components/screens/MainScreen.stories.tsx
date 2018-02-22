@@ -1,15 +1,15 @@
+import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { storiesOf } from '@storybook/react';
 
-import Chrome from '../Chrome';
-import MainScreen from './MainScreen';
+import Chrome from "../Chrome";
+import MainScreen from "./MainScreen";
 
-storiesOf('MainScreen', module)
-  .add('base', () => (
+storiesOf("MainScreen", module)
+  .add("base", () => (
     <MainScreen />
   ))
-  .add('with chrome', () => (
+  .add("with chrome", () => (
       <Chrome>
         <MainScreen />
       </Chrome>
-  ))
+  ));

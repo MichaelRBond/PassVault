@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import MenuList from '../elements/MenuList';
-import SearchBox from '../elements/SearchBox';
+import MenuList from "../elements/MenuList";
+import SearchBox from "../elements/SearchBox";
 
 interface ComponentProps {
   handleTestConnection?: any;
@@ -9,47 +9,50 @@ interface ComponentProps {
 }
 
 export default class extends React.Component<ComponentProps, {}> {
-  handleTestConnection(e: Event) {
-    if(this.props.handleTestConnection) {
+  public handleTestConnection(e: Event) {
+    if (this.props.handleTestConnection) {
       this.props.handleTestConnection(e);
     }
   }
 
-  handleConfirm(e: Event) {
-    if(this.props.handleConfirm) {
+  public handleConfirm(e: Event) {
+    if (this.props.handleConfirm) {
       this.props.handleConfirm(e);
     }
   }
 
-  getItems() {
-
+  public getItems() {
+    //
   }
 
-  render() {
+  public render() {
     return (
       <div>
-        <SearchBox 
+        <SearchBox
           id="search"
           placeholder="Search websites and notes"
         />
         <MenuList items={[{
             title: "Favorites",
             icon: "favorite",
-            href: "#/favorites"
-          },{
+            href: "#/favorites",
+          },
+          {
             title: "Website Passwords",
             icon: "laptop",
-            href: "#/website-passwords"
-        },{
+            href: "#/website-passwords",
+          },
+          {
             title: "Notes",
             icon: "notes",
-            href: "#/notes"
-        },{
+            href: "#/notes",
+          },
+          {
             title: "Passwords Generator",
             icon: "lock",
-            href: "#/password-generator"
+            href: "#/password-generator",
         }]}/>
       </div>
-    )
+    );
   }
 }

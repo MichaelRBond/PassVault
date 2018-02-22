@@ -6,7 +6,7 @@
   "author": "Move Inc",
   "scripts": {
     "build": "webpack -p --optimize-minimize",
-    "lint": "tslint --project tsconfig.json -e node_modules src/**/*.ts src/**/*.tsx src/*.tsx test/**/*.ts",
+    "lint": "tslint --project tsconfig.json -e node_modules src/**/*.ts src/**/*.tsx src/components/**/*.tsx src/*.tsx test/**/*.ts",
     "test": "jest --coverage --no-cache",
     "verify": "yarn lint && yarn build && yarn test",
     "start": "webpack-dev-server --hot --port 3000 --host 0.0.0.0",
