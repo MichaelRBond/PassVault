@@ -1,4 +1,5 @@
 import * as React from "react";
+import Checkbox from "../elements/Checkbox";
 import TextInput from "../elements/TextInput";
 
 const logo = require("./passvaultlogo.png");
@@ -78,10 +79,16 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
                       colSize={12}
                     />
                     <div className="col s12 center-align">
-                        <input type="checkbox" className="filled-in" id="filled-in-box" checked={true}/>
-                        <label htmlFor="filled-in-box">Remember User?</label>
-                        <input type="checkbox" className="filled-in" id="filled-in-box2"/>
-                        <label htmlFor="filled-in-box2">Remember Password?</label>
+                        <Checkbox
+                          label="Remember User?"
+                          onChangeHandler={undefined}
+                          checked={true}
+                        />
+                        <Checkbox
+                          label="Remember Password?"
+                          onChangeHandler={undefined}
+                          checked={false}
+                        />
                     </div>
                     <div className="col s12 center-align pad-top-50">
                         <a className="waves-effect waves-light btn big-button">Login</a>
