@@ -95,6 +95,19 @@ export default class Vault {
         this.token = token;
         return;
     }
+
+    public async testConnection(hostname: string): Promise<boolean> {
+        try {
+            await this.http.request({
+                baseURL: `${this.url}/v1`,
+                url: `/sys/health?standbyok`,
+                method: "GET",
+            });
+            return true;
+        } catch (err) {
+            return false;
+        }
+    }
 }
 
 export function restoreVaultClient(http: HttpClient, url: string, token: string, username: string): Vault {

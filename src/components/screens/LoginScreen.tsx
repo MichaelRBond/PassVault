@@ -2,45 +2,18 @@ import * as React from "react";
 import Checkbox from "../elements/Checkbox";
 import ConfirmButton from "../elements/ConfirmButton";
 import TextInput from "../elements/TextInput";
+import Vault from "../../vault";
 
 const logo = require("./passvaultlogo.png");
 
 interface ComponentProps {
-  handleTestConnection?: any;
-  handleConfirm?: any;
+  vaultClient: Vault;
 }
 
-interface ComponentState {
-  url: string;
-}
 
-export default class LoginScreen extends React.Component<ComponentProps, ComponentState> {
+export default class LoginScreen extends React.Component<ComponentProps, {}> {
   constructor(props: ComponentProps) {
     super(props);
-    this.state = {
-      url: "",
-    };
-
-    this.updateUrl = this.updateUrl.bind(this);
-  }
-
-  public handleTestConnection(e: Event) {
-    if (this.props.handleTestConnection) {
-      this.props.handleTestConnection(e);
-    }
-  }
-
-  public handleConfirm(e: Event) {
-    if (this.props.handleConfirm) {
-      this.props.handleConfirm(this.state.url);
-    }
-  }
-
-  public updateUrl(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      ...this.state,
-      url: (e.currentTarget as any).value,
-    });
   }
 
   public render() {

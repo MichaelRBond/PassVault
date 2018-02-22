@@ -2,17 +2,19 @@ import * as React from "react";
 import ConfirmButton from "../elements/ConfirmButton";
 import RoundButton from "../elements/RoundButton";
 import TextInput from "../elements/TextInput";
+import Vault from "../../vault";
 
 const logo = require("./passvaultlogo.png");
 
 interface ComponentProps {
-  handleTestConnection?: any;
-  handleConfirm?: any;
+  handleConfirm: any;
 }
 
 interface ComponentState {
   url: string;
 }
+
+declare var window: any;
 
 export default class WelcomeScreen extends React.Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
@@ -20,14 +22,24 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
     this.state = {
       url: "",
     };
-
-    this.updateUrl = this.updateUrl.bind(this);
   }
 
   public updateUrl(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({
       ...this.state,
       url: (e.currentTarget as any).value,
+    });
+  }
+
+  public handleTestConnection(): Promise<boolean> {
+    return Vault.testConnection(this.state.url).then((success) => {
+      if (success) {
+        window.alert("We did it!");
+      } else {
+        window.alert("Bad URL dummy");
+      }
+
+      return success;
     });
   }
 
@@ -56,14 +68,13 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
                     label="Vault URL"
                     validate={true}
                     colSize={12}
-                    onChangeHandler={this.updateUrl}
+                    onChangeHandler={this.updateUrl.bind(this)}
                     placeholder="https://myvault.com:8200"
-                    active={true}
                   />
               </form>
             </div>
             <div className="row center-text">
-              <RoundButton text={"Test Connection"} onclickHandler={(e: Event) => { this.handleTestConnection(e); }}/>
+              <RoundButton text={"Test Connection"} onclickHandler={(e: Event) => { this.handleTestConnection(); }}/>
             </div>
             <div className="row center-text">
               <ConfirmButton text={"Save"} onclickHandler={(e: Event) => { this.handleConfirm(e); }}/>
@@ -74,15 +85,11 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
     );
   }
 
-  private handleTestConnection(e: Event) {
-    if (this.props.handleTestConnection) {
-      this.props.handleTestConnection(e);
-    }
-  }
-
   private handleConfirm(e: Event) {
-    if (this.props.handleConfirm) {
-      this.props.handleConfirm(this.state.url);
-    }
+    this.handleTestConnection().then((success) => {
+      if (success) {
+        this.props.handleConfirm(this.state.url);
+      }
+    });
   }
 }

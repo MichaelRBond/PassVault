@@ -6,10 +6,10 @@ import WelcomeScreen from "./WelcomeScreen";
 
 storiesOf("WelcomeScreen", module)
   .add("base", () => (
-    <WelcomeScreen />
+    <WelcomeScreen handleConfirm={() => {}}/>
   ))
   .add("with chrome", () => (
       <Chrome>
-        <WelcomeScreen />
+        <WelcomeScreen handleConfirm={() => {}}/>
       </Chrome>
   ));
