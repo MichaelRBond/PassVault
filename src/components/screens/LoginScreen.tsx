@@ -1,5 +1,6 @@
 import * as React from "react";
 import Checkbox from "../elements/Checkbox";
+import ConfirmButton from "../elements/ConfirmButton";
 import TextInput from "../elements/TextInput";
 
 const logo = require("./passvaultlogo.png");
@@ -91,7 +92,11 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
                         />
                     </div>
                     <div className="col s12 center-align pad-top-50">
-                        <a className="waves-effect waves-light btn big-button">Login</a>
+                        <ConfirmButton
+                          text="Login"
+                          onclickHandler={undefined}
+                          type="big-button"
+                        />
                     </div>
                 </div>
             </div>
