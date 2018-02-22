@@ -1,7 +1,7 @@
 import * as React from "react";
 
 interface ComponentProps {
-  text: string;
+  text?: string;
   onclickHandler: any;
 }
 
@@ -15,7 +15,7 @@ export default class RoundButton extends React.Component<ComponentProps, any> {
       <h6>
         <a className="btn-floating teal" onClick={this.props.onclickHandler}>
           <i className="small material-icons">refresh</i>
-        </a>  {this.props.text}
+        </a>  {this.props.text && this.props.text}
       </h6>
     );
   }

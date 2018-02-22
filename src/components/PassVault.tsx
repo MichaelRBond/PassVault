@@ -5,6 +5,7 @@ import Vault from "../vault";
 import Chrome from "./Chrome";
 import LoginScreen from "./screens/LoginScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
+import PasswordGenerator from "./screens/PasswordGenerator";
 // import MainScreen from "./screens/MainScreen";
 
 interface ComponentProps {
@@ -42,6 +43,9 @@ export default class PassVault extends React.Component<ComponentProps, Component
             </Route>
             <Route path="/login">
               <LoginScreen vaultClient={this.props.vault}/>
+            </Route>
+            <Route path="/passwordGenerator">
+              <PasswordGenerator />
             </Route>
           </Switch>
         </Chrome>

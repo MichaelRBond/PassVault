@@ -6,13 +6,14 @@ const DEFAULT_COL_SIZE = 6;
 
 interface ComponentProps {
   id: string;
-  label: string;
+  label?: string;
   onChangeHandler?: any; // TODO : Type better
   placeholder?: string;
   colSize?: number;
   type?: string;
   validate?: boolean;
   active?: boolean;
+  value?: any;
 }
 
 export default class TextInput extends React.Component<ComponentProps, {}> {
@@ -34,8 +35,11 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
           validate={validate}
           onChangeHandler={this.props.onChangeHandler}
           type={this.props.type}
+          value={this.props.value}
         />
-        <label htmlFor={this.props.id} className={`${active}`}>{this.props.label}</label>
+        {this.props.label && (
+          <label htmlFor={this.props.id} className={`${active}`}>{this.props.label}</label>
+        )}
       </div>
     );
     return display;

@@ -47,13 +47,12 @@ export default class Checkbox extends React.Component<ComponentProps, ComponentS
     const checkbox = this.getCheckbox();
     this.setState({
       ...this.state,
-      checked: checkbox.parentElement.MaterialCheckbox.inputElement_.checked,
+      checked: checkbox.checked,
     });
     return this.props.onChangeHandler(!this.state.checked);
   }
 
   private getCheckbox(): any {
-    return document.querySelector(`#${this.state.id}`);
+    return document.getElementById(this.state.id);
   }
-
 }
