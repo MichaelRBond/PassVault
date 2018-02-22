@@ -11,7 +11,7 @@ export interface Password {
 }
 
 export default class Vault {
-    public static PREFERENCES_SECRET = ":username:/preferences";
+    public static PREFERENCES_SECRET = "/preferences";
 
     // FIXME: Saving username state here will make it harder to have multiple valut servers configured
     private username: string;
@@ -49,7 +49,7 @@ export default class Vault {
     // the return better
     public read(path: string): Promise<AxiosResponse> {
         return this.http.request({
-            baseURL: `${this.url}/v1/passvault`,
+            baseURL: this.getBaseUrl(),
             url: `/${path}`,
             method: "GET",
             headers: {
@@ -62,7 +62,7 @@ export default class Vault {
     // the return better
     public write(path: string, data?: any): Promise<AxiosResponse> {
         return this.http.request({
-            baseURL: `${this.url}/v1`,
+            baseURL: this.getBaseUrl(),
             url: `/${path}`,
             method: "POST",
             headers: {
@@ -74,7 +74,7 @@ export default class Vault {
 
     public async list(path: string): Promise<string[]> {
         const result = await this.http.request({
-            baseURL: `${this.url}/v1`,
+            baseURL: this.getBaseUrl(),
             method: "LIST",
             url: `/${path}`,
             headers: {
@@ -127,7 +127,7 @@ export default class Vault {
 
     // TODO : Type better
   public async getFavorites(): Promise<string[]> {
-    const result = await this.read(Vault.PREFERENCES_SECRET.replace(/:username:/, this.username));
+    const result = await this.read(Vault.PREFERENCES_SECRET);
     return result.data.data.favorites.split(/,/);
   }
 
@@ -139,6 +139,10 @@ export default class Vault {
   // TODO : don't return axios response
   public savePassword(path: string, password: Password): Promise<AxiosResponse> {
     return this.write(path, password);
+  }
+
+  private getBaseUrl(): string {
+    return `${this.url}/v1/passvault/${this.username}`;
   }
 }
 
