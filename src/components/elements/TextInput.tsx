@@ -12,6 +12,7 @@ interface ComponentProps {
   colSize?: number;
   type?: string;
   validate?: boolean;
+  active?: boolean;
 }
 
 export default class TextInput extends React.Component<ComponentProps, {}> {
@@ -21,6 +22,7 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
   }
 
   public render() {
+    const active = isNullOrUndefined(this.props.active) ? "" : "active";
     const validate = this.props.validate ? true : false;
     const columnSize = isNullOrUndefined(this.props.colSize) ? DEFAULT_COL_SIZE : this.props.colSize;
     const placeholder = isNullOrUndefined(this.props.placeholder) ? "" : this.props.placeholder;
@@ -33,7 +35,7 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
           onChangeHandler={this.props.onChangeHandler}
           type={this.props.type}
         />
-        <label htmlFor={this.props.id}>{this.props.label}</label>
+        <label htmlFor={this.props.id} className={`${active}`}>{this.props.label}</label>
       </div>
     );
     return display;

@@ -1,7 +1,7 @@
 import * as React from "react";
-
 import ConfirmButton from "../elements/ConfirmButton";
 import RoundButton from "../elements/RoundButton";
+import TextInput from "../elements/TextInput";
 
 const logo = require("./passvaultlogo.png");
 
@@ -51,10 +51,15 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
             </div>
             <div className="center-text col s12">
               <form>
-                <div className="input-field">
-                  <input type="text" id="vault_url" onChange={this.updateUrl} placeholder="https://myvault.com:8200" />
-                  <label htmlFor="vault_url" className="active">Vault URL</label>
-                </div>
+                <TextInput
+                    id="vault_url"
+                    label="Vault URL"
+                    validate={true}
+                    colSize={12}
+                    onChangeHandler={this.updateUrl}
+                    placeholder="https://myvault.com:8200"
+                    active={true}
+                  />
               </form>
             </div>
             <div className="row center-text">
