@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import "./MenuList.scss";
+import "../../styles/MenuList.scss";
 
 interface ComponentProps {
   items?: Item[];
