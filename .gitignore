@@ -12,3 +12,4 @@ src/**/*.js
 
 test-vault/data/logs/*
 test-vault/data/logs
+test-vault/keys
