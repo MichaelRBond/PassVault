@@ -9,41 +9,14 @@ const httpClient = new HttpClient();
 const vault = new Vault(httpClient);
 vault.setUsername("test");
 vault.setUrl("http://127.0.0.1:8200");
+vault.setToken("45d73290-51f6-79da-c2d1-66ab5b8cb501");
 
 storiesOf("MainScreen", module)
   .add("base", () => (
     <MainScreen vault={vault} />
   ))
   .add("with chrome", () => (
-      <VaultLogin />
+    <Chrome>
+      <MainScreen vault={vault} />
+    </Chrome>
   ));
-
-class VaultLogin extends React.Component<{}, {vault: Vault}> {
-
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      vault,
-    };
-  }
-
-  public async componentWillMount() {
-    await this.state.vault.login("test", "test");
-    this.setState({
-      ...this.state,
-      vault,
-    });
-  }
-
-  public render() {
-    if (!this.state.vault.isAuthenticated()) {
-      return null;
-    }
-    return (
-      <Chrome>
-        <MainScreen vault={vault} key={this.state.vault.isAuthenticated().toString()} />
-      </Chrome>
-    );
-  }
-
-}

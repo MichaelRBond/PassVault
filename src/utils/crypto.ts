@@ -15,7 +15,7 @@ export default function generatePassword(length: number, options?: PasswordGener
     }
 
     if (options && options.lowercase) {
-        chars = chars + "abcdefghijklmnopqrstuvwxyz"
+        chars = chars + "abcdefghijklmnopqrstuvwxyz";
     }
 
     if (options && options.numbers) {

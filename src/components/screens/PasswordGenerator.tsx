@@ -1,8 +1,8 @@
 import * as React from "react";
-import Checkbox from "../elements/Checkbox";
-import TextInput from "../elements/TextInput";
 import generatePassword from "../../utils/crypto";
+import Checkbox from "../elements/Checkbox";
 import RoundButton from "../elements/RoundButton";
+import TextInput from "../elements/TextInput";
 
 const logo = require("./passvaultlogo.png");
 
@@ -39,7 +39,7 @@ export default class PasswordGenerator extends React.Component<{}, ComponentStat
               lowercase: this.state.enableLowercase,
               capitals: this.state.enableCapitals,
               numbers: this.state.enableNumbers,
-              symbols: this.state.enableSymbols
+              symbols: this.state.enableSymbols,
           }),
       });
   }
@@ -47,21 +47,21 @@ export default class PasswordGenerator extends React.Component<{}, ComponentStat
   public setEnableCaptials(enableCapitals: boolean) {
     this.setState({
         ...this.state,
-        enableCapitals
+        enableCapitals,
     });
   }
 
   public setEnableLowercase(enableLowercase: boolean) {
     this.setState({
         ...this.state,
-        enableLowercase
+        enableLowercase,
     });
   }
 
   public setEnableNumbers(enableNumbers: boolean) {
     this.setState({
         ...this.state,
-        enableNumbers
+        enableNumbers,
     });
   }
 
@@ -105,7 +105,7 @@ export default class PasswordGenerator extends React.Component<{}, ComponentStat
                       validate={true}
                       colSize={12}
                       value={this.state.passwordLength}
-                      onChangeHandler={(e: any) => this.setPasswordLength(parseInt(e.currentTarget.value))}
+                      onChangeHandler={(e: any) => this.setPasswordLength(parseInt(e.currentTarget.value, 10))}
                     />
                     <div className="col s12 center-align">
                         <p>
