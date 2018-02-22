@@ -1,5 +1,6 @@
 import * as React from "react";
 import {isNullOrUndefined} from "util";
+import Input from "./input-text";
 
 interface ComponentProps {
   id: string;
@@ -18,7 +19,12 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
     const placeholder = isNullOrUndefined(this.props.placeholder) ? "" : this.props.placeholder;
     const display = (
       <div className="input-field col s6">
-        <input id={this.props.id} placeholder={placeholder} type="text" className="validate"/>
+        <Input
+          id={this.props.id}
+          placeholder={placeholder}
+          validate={true}
+          onChangeHandler={this.props.onChangeHandler}
+        />
         <label htmlFor={this.props.id}>{this.props.label}</label>
       </div>
     );
