@@ -10,12 +10,12 @@ storiesOf("MenuList", module)
         <MenuList items={[{
           title: "Favorites",
           icon: "favorite",
-          href: "#/favorites",
+          content: "foo",
         },
         {
           title: "Notes",
           icon: "insert_drive_file",
-          href: "#/notes",
+          content: "#/notes",
         }]}/>
       </Chrome>
   ));

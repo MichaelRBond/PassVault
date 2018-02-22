@@ -1,48 +1,23 @@
 import * as React from "react";
+import Vault from "../../vault";
+import Checkbox from "../elements/Checkbox";
+import ConfirmButton from "../elements/ConfirmButton";
+import TextInput from "../elements/TextInput";
 
 const logo = require("./passvaultlogo.png");
 
 interface ComponentProps {
-  handleTestConnection?: any;
-  handleConfirm?: any;
+  vaultClient: Vault;
 }
 
-interface ComponentState {
-  url: string;
-}
-
-export default class LoginScreen extends React.Component<ComponentProps, ComponentState> {
+export default class LoginScreen extends React.Component<ComponentProps, {}> {
   constructor(props: ComponentProps) {
     super(props);
-    this.state = {
-      url: "",
-    };
-
-    this.updateUrl = this.updateUrl.bind(this);
-  }
-
-  public handleTestConnection(e: Event) {
-    if (this.props.handleTestConnection) {
-      this.props.handleTestConnection(e);
-    }
-  }
-
-  public handleConfirm(e: Event) {
-    if (this.props.handleConfirm) {
-      this.props.handleConfirm(this.state.url);
-    }
-  }
-
-  public updateUrl(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      ...this.state,
-      url: (e.currentTarget as any).value,
-    });
   }
 
   public render() {
     return (
-       <main>
+      <main>
         <div className="page-content">
           <div>
             <div className="center-text">
@@ -61,22 +36,39 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
                     </div>
                 </div>
                 <div className="col s12 center-align pad-top-20">
-                    <div className="input-field col s12">
-                        <input placeholder="Username" id="username" type="text" className="validate"/>
-                    </div>
+                  <TextInput
+                      id="username"
+                      label="Username"
+                      validate={true}
+                      colSize={12}
+                    />
                 </div>
                 <div className="col s12 center-align">
-                    <div className="input-field col s12">
-                        <input placeholder="Password" id="first_name" type="password" className="validate"/>
-                    </div>
+                    <TextInput
+                      id="password"
+                      label="Password"
+                      type="password"
+                      validate={true}
+                      colSize={12}
+                    />
                     <div className="col s12 center-align">
-                        <input type="checkbox" className="filled-in" id="filled-in-box" checked={true}/>
-                        <label htmlFor="filled-in-box">Remember User?</label>
-                        <input type="checkbox" className="filled-in" id="filled-in-box2"/>
-                        <label htmlFor="filled-in-box2">Remember Password?</label>
+                        <Checkbox
+                          label="Remember User?"
+                          onChangeHandler={undefined}
+                          checked={true}
+                        />
+                        <Checkbox
+                          label="Remember Password?"
+                          onChangeHandler={undefined}
+                          checked={false}
+                        />
                     </div>
                     <div className="col s12 center-align pad-top-50">
-                        <a className="waves-effect waves-light btn big-button">Login</a>
+                        <ConfirmButton
+                          text="Login"
+                          onclickHandler={undefined}
+                          type="big-button"
+                        />
                     </div>
                 </div>
             </div>

@@ -1,18 +1,21 @@
 import * as React from "react";
-
+import Vault from "../../vault";
 import ConfirmButton from "../elements/ConfirmButton";
 import RoundButton from "../elements/RoundButton";
+import TextInput from "../elements/TextInput";
 
 const logo = require("./passvaultlogo.png");
 
 interface ComponentProps {
-  handleTestConnection?: any;
-  handleConfirm?: any;
+  handleConfirm: any;
+  vault: Vault;
 }
 
 interface ComponentState {
   url: string;
 }
+
+declare var window: any;
 
 export default class WelcomeScreen extends React.Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
@@ -20,8 +23,6 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
     this.state = {
       url: "",
     };
-
-    this.updateUrl = this.updateUrl.bind(this);
   }
 
   public updateUrl(e: React.ChangeEvent<HTMLInputElement>) {
@@ -29,6 +30,16 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
       ...this.state,
       url: (e.currentTarget as any).value,
     });
+  }
+
+  public async handleTestConnection(): Promise<boolean> {
+    const result = await this.props.vault.testConnection(this.state.url);
+    if (result) {
+      window.alert("We did it!");
+    } else {
+      window.alert("Bad URL dummy");
+    }
+    return result;
   }
 
   public render() {
@@ -51,17 +62,24 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
             </div>
             <div className="center-text col s12">
               <form>
-                <div className="input-field">
-                  <input type="text" id="vault_url" onChange={this.updateUrl} placeholder="https://myvault.com:8200" />
-                  <label htmlFor="vault_url" className="active">Vault URL</label>
-                </div>
+                <TextInput
+                    id="vault_url"
+                    label="Vault URL"
+                    validate={true}
+                    colSize={12}
+                    onChangeHandler={this.updateUrl.bind(this)}
+                    placeholder="https://myvault.com:8200"
+                  />
               </form>
             </div>
             <div className="row center-text">
-              <RoundButton text={"Test Connection"} onclickHandler={(e: Event) => { this.handleTestConnection(e); }}/>
+              <RoundButton
+                text={"Test Connection"}
+                onclickHandler={async (e: Event) => { await this.handleTestConnection(); }}
+              />
             </div>
             <div className="row center-text">
-              <ConfirmButton text={"Save"} onclickHandler={(e: Event) => { this.handleConfirm(e); }}/>
+              <ConfirmButton text={"Save"} onclickHandler={async (e: Event) => { await this.handleConfirm(e); }}/>
             </div>
           </div>
         </div>
@@ -69,15 +87,11 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
     );
   }
 
-  private handleTestConnection(e: Event) {
-    if (this.props.handleTestConnection) {
-      this.props.handleTestConnection(e);
+  private async handleConfirm(e: Event) {
+    const success = await this.handleTestConnection();
+    if (success) {
+      await this.props.handleConfirm(this.state.url);
     }
-  }
-
-  private handleConfirm(e: Event) {
-    if (this.props.handleConfirm) {
-      this.props.handleConfirm(this.state.url);
-    }
+    return;
   }
 }

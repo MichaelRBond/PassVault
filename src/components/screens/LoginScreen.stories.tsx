@@ -3,19 +3,16 @@ import * as React from "react";
 import {HttpClient} from "../../utils/http";
 import Vault from "../../vault";
 import Chrome from "../Chrome";
-import WelcomeScreen from "./WelcomeScreen";
+import LoginScreen from "./LoginScreen";
 
 const httpClient = new HttpClient();
-const vault = new Vault(httpClient);
 
-storiesOf("WelcomeScreen", module)
+storiesOf("LoginScreen", module)
   .add("base", () => (
-    <WelcomeScreen
-      vault={vault}
-      handleConfirm={() => {/**/}}/>
+    <LoginScreen vaultClient={new Vault(httpClient)}/>
   ))
   .add("with chrome", () => (
       <Chrome>
-        <WelcomeScreen vault={vault} handleConfirm={() => {/**/}}/>
+        <LoginScreen vaultClient={new Vault(httpClient)}/>
       </Chrome>
   ));
