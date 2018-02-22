@@ -13,6 +13,12 @@ promise.polyfill();
 const httpClient = new HttpClient();
 const vaultClient = new Vault(httpClient);
 
+// FIXME: THis is only for testing. Remove once login is working
+// Until we have login working these need to be hard coded
+vaultClient.setToken("45d73290-51f6-79da-c2d1-66ab5b8cb501"); // TODO : put your vault token here
+vaultClient.setUsername("test");
+vaultClient.setUrl("http://127.0.0.1:8200");
+
 ReactDOM.render(
   (
     <PassVault
