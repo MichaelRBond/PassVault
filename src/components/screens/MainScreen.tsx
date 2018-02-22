@@ -35,23 +35,24 @@ export default class extends React.Component<ComponentProps, {}> {
         <MenuList items={[{
             title: "Favorites",
             icon: "favorite",
-            href: "#/favorites",
+            content: "foo",
           },
           {
             title: "Website Passwords",
             icon: "laptop",
-            href: "#/website-passwords",
+            content: "bar",
           },
           {
             title: "Notes",
             icon: "notes",
-            href: "#/notes",
+            content: "oof",
           },
           {
             title: "Passwords Generator",
             icon: "lock",
-            href: "#/password-generator",
-        }]}/>
+            content: "rab",
+          },
+        ]}/>
       </div>
     );
   }
