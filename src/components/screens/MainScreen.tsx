@@ -89,27 +89,41 @@ export default class extends React.Component<ComponentProps, ComponentState> {
     );
   }
 
-  // TODO : Type return better
+  // TODO : Type return better, check if http is in front of {f} and append as needed to fix link
   private async getFavorites(): Promise<any> {
     const favorites = await this.props.vault.getFavorites();
     return favorites.map((f) => {
       return (
-      <div>
-        {f}
-        <a href="">
-          <i className="material-icons">person</i>
-        </a>
-        <a href="">
-          <i className="material-icons">lock</i>
-        </a>
-        <a href="">
-          <i className="material-icons">more_vert</i>
-        </a>
-      </div>
-      );
-    });
-  }
-
+        <div className="row">
+          <div className="col s1 left-align">
+           <a href="test.com" className="grey-text">
+          <i className="material-icons prefix">personal_video</i>
+          </a>
+          </div>
+          <div className="col s6 offset-s1 left-align">
+            <a href={f}>{f}</a>
+          </div>
+          <div className="col s1 center-align">
+              <a href="#" className="grey-text">
+                  <i className="material-icons prefix">person</i>
+              </a>
+          </div>
+          <div className="col s1 center-align">
+              <a href="#" className="grey-text">
+                  <i className="material-icons prefix">lock</i>
+              </a>
+          </div>
+          <div className="col s1 center-align">
+              <a href="#" className="grey-text">
+                  <i className="material-icons prefix">mode_edit</i>
+              </a>
+          </div>
+        </div>
+        );
+      });
+    }
+      
+    
   // TODO : Type return better
   private async getFolders(): Promise<any> {
     const folders = await this.props.vault.getFolders();
