@@ -4,8 +4,8 @@ import { Route, Router, Switch } from "react-router";
 import Vault from "../vault";
 import Chrome from "./Chrome";
 import LoginScreen from "./screens/LoginScreen";
-import WelcomeScreen from "./screens/WelcomeScreen";
 import PasswordGenerator from "./screens/PasswordGenerator";
+import WelcomeScreen from "./screens/WelcomeScreen";
 // import MainScreen from "./screens/MainScreen";
 
 interface ComponentProps {
