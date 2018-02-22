@@ -108,6 +108,10 @@ export default class Vault {
         return;
     }
 
+    public getToken(): string {
+        return this.token;
+    }
+
     public setUrl(url: string): void {
         this.url = url;
         return;

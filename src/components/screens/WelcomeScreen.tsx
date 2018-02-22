@@ -33,13 +33,7 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
   }
 
   public async handleTestConnection(): Promise<boolean> {
-    const result = await this.props.vault.testConnection(this.state.url);
-    if (result) {
-      window.alert("We did it!");
-    } else {
-      window.alert("Bad URL dummy");
-    }
-    return result;
+    return this.props.vault.testConnection(this.state.url);
   }
 
   public render() {
@@ -90,6 +84,7 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
   private async handleConfirm(e: Event) {
     const success = await this.handleTestConnection();
     if (success) {
+      window.localStorage.setItem("__passvault_vault_url", this.state.url);
       await this.props.handleConfirm(this.state.url);
     }
     return;

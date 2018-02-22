@@ -13,7 +13,6 @@ interface ComponentProps {
 }
 
 interface ComponentState {
-  vaultClient: Vault;
   history: History;
 }
 
@@ -23,14 +22,33 @@ export default class PassVault extends React.Component<ComponentProps, Component
   constructor(props: any) {
     super(props);
     this.state = {
-      vaultClient: null,
       history: createHashHistory(),
     };
+
+    const vaultUrl = window.localStorage.getItem("__passvault_vault_url");
+    if (vaultUrl) {
+      this.props.vault.setUrl(vaultUrl);
+    }
+
+    const vaultToken = window.localStorage.getItem("__passvault_vault_token");
+    if (vaultToken) {
+      this.props.vault.setToken(vaultToken);
+    }
+
+    if (vaultUrl) {
+      if (vaultToken) {
+        window.location = "#/main";
+      } else {
+        window.location = "#/login";
+      }
+    } else {
+      window.location = "#/start";
+    }
   }
 
   public handleSaveUrl(url: string) {
     this.props.vault.setUrl(url);
-    window.location = "/#/login";
+    window.location = "#/login";
   }
 
   public render() {
