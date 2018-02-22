@@ -11,7 +11,7 @@ export interface Password {
 }
 
 export default class Vault {
-    public static PREFERENCES_SECRET = "/preferences";
+    public static PREFERENCES_SECRET = "preferences";
 
     // FIXME: Saving username state here will make it harder to have multiple valut servers configured
     private username: string;
@@ -126,7 +126,7 @@ export default class Vault {
         }
     }
 
-    // TODO : Type better
+  // TODO : Type better
   public async getFavorites(): Promise<string[]> {
     const result = await this.read(Vault.PREFERENCES_SECRET);
     return result.data.data.favorites.split(/,/);
