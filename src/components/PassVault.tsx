@@ -32,6 +32,7 @@ export default class PassVault extends React.Component<ComponentProps, Component
 
     const vaultToken = window.localStorage.getItem("__passvault_vault_token");
     if (vaultToken) {
+      this.props.vault.setUsername(window.localStorage.getItem("__passvault_vault_username"));
       this.props.vault.setToken(vaultToken);
     }
 

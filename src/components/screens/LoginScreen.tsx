@@ -60,6 +60,7 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
       await this.props.vaultClient.login(this.state.username, this.state.password);
       if (this.state.rememberLogin) {
         window.localStorage.setItem("__passvault_vault_token", this.props.vaultClient.getToken());
+        window.localStorage.setItem("__passvault_vault_username", this.state.username);
       }
 
       window.location = "#/main";
