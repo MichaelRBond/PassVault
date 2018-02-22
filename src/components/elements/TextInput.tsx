@@ -14,7 +14,7 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
     super(props);
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     $(`#${this.props.id}`).material_textbox();
   }
 
