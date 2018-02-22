@@ -1,3 +1,3 @@
-path "/passvault/test" {
-    capabilities = ["sudo"]
+path "passvault/test/*" {
+  capabilities = ["create", "read", "update", "delete", "list"]
 }
