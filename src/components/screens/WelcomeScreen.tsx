@@ -1,13 +1,14 @@
 import * as React from "react";
+import Vault from "../../vault";
 import ConfirmButton from "../elements/ConfirmButton";
 import RoundButton from "../elements/RoundButton";
 import TextInput from "../elements/TextInput";
-import Vault from "../../vault";
 
 const logo = require("./passvaultlogo.png");
 
 interface ComponentProps {
   handleConfirm: any;
+  vault: Vault;
 }
 
 interface ComponentState {
@@ -31,16 +32,14 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
     });
   }
 
-  public handleTestConnection(): Promise<boolean> {
-    return Vault.testConnection(this.state.url).then((success) => {
-      if (success) {
-        window.alert("We did it!");
-      } else {
-        window.alert("Bad URL dummy");
-      }
-
-      return success;
-    });
+  public async handleTestConnection(): Promise<boolean> {
+    const result = await this.props.vault.testConnection(this.state.url);
+    if (result) {
+      window.alert("We did it!");
+    } else {
+      window.alert("Bad URL dummy");
+    }
+    return result;
   }
 
   public render() {
@@ -74,10 +73,13 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
               </form>
             </div>
             <div className="row center-text">
-              <RoundButton text={"Test Connection"} onclickHandler={(e: Event) => { this.handleTestConnection(); }}/>
+              <RoundButton
+                text={"Test Connection"}
+                onclickHandler={async (e: Event) => { await this.handleTestConnection(); }}
+              />
             </div>
             <div className="row center-text">
-              <ConfirmButton text={"Save"} onclickHandler={(e: Event) => { this.handleConfirm(e); }}/>
+              <ConfirmButton text={"Save"} onclickHandler={async (e: Event) => { await this.handleConfirm(e); }}/>
             </div>
           </div>
         </div>
@@ -85,11 +87,11 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
     );
   }
 
-  private handleConfirm(e: Event) {
-    this.handleTestConnection().then((success) => {
-      if (success) {
-        this.props.handleConfirm(this.state.url);
-      }
-    });
+  private async handleConfirm(e: Event) {
+    const success = await this.handleTestConnection();
+    if (success) {
+      await this.props.handleConfirm(this.state.url);
+    }
+    return;
   }
 }

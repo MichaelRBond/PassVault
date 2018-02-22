@@ -6,10 +6,11 @@ export default class Vault {
     // FIXME: Saving username state here will make it harder to have multiple valut servers configured
     private username: string;
     private token: string;
+    private url: string; // can't pass into the constructor, because we create the object as
+                         // react is starting up
 
     public constructor(
         private http: HttpClient,
-        private url: string,
         private logger: Logger = new Logger("vault-client"),
     ) { }
 
@@ -96,6 +97,11 @@ export default class Vault {
         return;
     }
 
+    public setUrl(url: string): void {
+        this.url = url;
+        return;
+    }
+
     public async testConnection(hostname: string): Promise<boolean> {
         try {
             await this.http.request({
@@ -111,7 +117,7 @@ export default class Vault {
 }
 
 export function restoreVaultClient(http: HttpClient, url: string, token: string, username: string): Vault {
-    const vault = new Vault(http, url);
+    const vault = new Vault(http);
     vault.setUsername(username); // TODO : Remove state from client
     vault.setToken(token); // TODO : remove state from client
     return vault;

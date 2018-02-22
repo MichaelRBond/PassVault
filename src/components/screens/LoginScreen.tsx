@@ -1,15 +1,14 @@
 import * as React from "react";
+import Vault from "../../vault";
 import Checkbox from "../elements/Checkbox";
 import ConfirmButton from "../elements/ConfirmButton";
 import TextInput from "../elements/TextInput";
-import Vault from "../../vault";
 
 const logo = require("./passvaultlogo.png");
 
 interface ComponentProps {
   vaultClient: Vault;
 }
-
 
 export default class LoginScreen extends React.Component<ComponentProps, {}> {
   constructor(props: ComponentProps) {
