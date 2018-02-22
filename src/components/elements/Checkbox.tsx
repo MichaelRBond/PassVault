@@ -45,7 +45,6 @@ export default class Checkbox extends React.Component<ComponentProps, ComponentS
 
   private handleChange(id: string): any {
     const checkbox = this.getCheckbox();
-    // console.log(checkbox.parentElement);
     this.setState({
       ...this.state,
       checked: checkbox.parentElement.MaterialCheckbox.inputElement_.checked,
