@@ -11,14 +11,61 @@ interface ComponentProps {
   vaultClient: Vault;
 }
 
+interface ComponentState {
+  username: string;
+  password: string;
+  rememberLogin: boolean;
+}
+
 declare var window: any;
 
-export default class LoginScreen extends React.Component<ComponentProps, {}> {
+export default class LoginScreen extends React.Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
     super(props);
 
     if (!props.vaultClient) {
       window.location = "/#/start";
+    }
+
+    this.state = {
+      username: "",
+      password: "",
+      rememberLogin: true,
+    };
+  }
+
+  public updateUsername(username: string) {
+    this.setState({
+      ...this.state,
+      username,
+    });
+  }
+
+  public updatePassword(password: string) {
+    this.setState({
+      ...this.state,
+      password,
+    });
+  }
+
+  public setRememberPassword(remember: boolean) {
+    this.setState({
+      ...this.state,
+      rememberLogin: remember,
+    });
+  }
+
+  public async tryLogin() {
+    try {
+      await this.props.vaultClient.login(this.state.username, this.state.password);
+      if (this.state.rememberLogin) {
+        window.localStorage.setItem("__passvault_vault_token", this.props.vaultClient.getToken());
+        window.localStorage.setItem("__passvault_vault_username", this.state.username);
+      }
+
+      window.location = "#/main";
+    } catch {
+      window.alert("login invalid");
     }
   }
 
@@ -57,6 +104,8 @@ export default class LoginScreen extends React.Component<ComponentProps, {}> {
                       label="Username"
                       validate={true}
                       colSize={12}
+                      value={this.state.username}
+                      onChangeHandler={(e: any) => this.updateUsername(e.currentTarget.value)}
                     />
                 </div>
                 <div className="col s12 center-align">
@@ -66,23 +115,20 @@ export default class LoginScreen extends React.Component<ComponentProps, {}> {
                       type="password"
                       validate={true}
                       colSize={12}
+                      value={this.state.password}
+                      onChangeHandler={(e: any) => this.updatePassword(e.currentTarget.value)}
                     />
                     <div className="col s12 center-align">
                         <Checkbox
-                          label="Remember User?"
-                          onChangeHandler={undefined}
-                          checked={true}
-                        />
-                        <Checkbox
-                          label="Remember Password?"
-                          onChangeHandler={undefined}
-                          checked={false}
+                          label="Remember Login?"
+                          onChangeHandler={(checked: boolean) => this.setRememberPassword(checked)}
+                          checked={this.state.rememberLogin}
                         />
                     </div>
                     <div className="col s12 center-align pad-top-50">
                         <ConfirmButton
                           text="Login"
-                          onclickHandler={undefined}
+                          onclickHandler={() => this.tryLogin()}
                           type="big-button"
                         />
                     </div>

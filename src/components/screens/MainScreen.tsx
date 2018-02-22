@@ -82,7 +82,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
             title: "Passwords Generator",
             icon: "lock",
             content: "rab",
-            url: "http://slashdot.org",
+            url: "#/passwordGenerator",
           },
         ]}/>
       </div>
