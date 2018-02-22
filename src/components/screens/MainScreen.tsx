@@ -10,8 +10,9 @@ interface ComponentProps {
 }
 
 interface ComponentState {
-  favorites: string;
+  favorites: any;
   notes: string;
+  folders: any;
 }
 
 export default class extends React.Component<ComponentProps, ComponentState> {
@@ -21,18 +22,21 @@ export default class extends React.Component<ComponentProps, ComponentState> {
     this.state = {
       favorites: "Loading ...",
       notes: "Loading ...",
+      folders: "Loading ...",
     };
   }
 
   public async componentDidMount(): Promise<void> {
-    const [favorites, notes] = await Promise.all([
+    const [favorites, notes, folders] = await Promise.all([
       this.getFavorites(),
       this.getNotes(),
+      this.getFolders(),
     ]);
     this.setState({
       ...this.state,
       favorites,
       notes,
+      folders,
     });
   }
 
@@ -67,7 +71,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
           {
             title: "Website Passwords",
             icon: "laptop",
-            content: "bar",
+            content: this.state.folders,
           },
           {
             title: "Notes",
@@ -104,6 +108,39 @@ export default class extends React.Component<ComponentProps, ComponentState> {
       </div>
       );
     });
+  }
+
+  // TODO : Type return better
+  private async getFolders(): Promise<any> {
+    const folders = await this.props.vault.getFolders();
+    const folderPromises = folders.map(async (f) => {
+      const websites = await this.props.vault.list(`${Vault.FOLDERS}/${f}`);
+      return (
+        <div>
+          {f}
+          <ul>
+            {
+              websites.map((w) => {
+                return (<li>
+                  {w}
+                  <a href="">
+                    <i className="material-icons">person</i>
+                  </a>
+                  <a href="">
+                    <i className="material-icons">lock</i>
+                  </a>
+                  <a href="">
+                    <i className="material-icons">more_vert</i>
+                  </a>
+                </li>);
+              })
+            }
+          </ul>
+        </div>
+      );
+    });
+    const ret = await Promise.all(folderPromises);
+    return ret;
   }
 
   private async getNotes(): Promise<string> {
