@@ -1,6 +1,6 @@
 import * as React from "react";
+import "../../styles/SearchBox.scss";
 import Input from "./input-text";
-import "./SearchBox.scss";
 
 interface ComponentProps {
   placeholder: string;
