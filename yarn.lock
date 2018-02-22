@@ -208,6 +208,10 @@
   version "22.1.3"
   resolved "https://registry.npmjs.org/@types/jest/-/jest-22.1.3.tgz#25da391935e6fac537551456f077ce03144ec168"
 
+"@types/jquery@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/@types/jquery/-/jquery-3.3.0.tgz#6316ac20a1a13c5d521a2dc661befc7184f73f5b"
+
 "@types/mocha@^2.2.44":
   version "2.2.48"
   resolved "https://registry.npmjs.org/@types/mocha/-/mocha-2.2.48.tgz#3523b126a0b049482e1c3c11877460f76622ffab"

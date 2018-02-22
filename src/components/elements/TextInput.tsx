@@ -1,11 +1,11 @@
 import * as React from "react";
-
-declare var $: any;
+import {isNullOrUndefined} from "util";
 
 interface ComponentProps {
   id: string;
   label: string;
   onChangeHandler: any; // TODO : Type better
+  placeholder?: string;
 }
 
 export default class TextInput extends React.Component<ComponentProps, {}> {
@@ -14,14 +14,11 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
     super(props);
   }
 
-  public componentDidMount() {
-    $(`#${this.props.id}`).material_textbox();
-  }
-
   public render() {
+    const placeholder = isNullOrUndefined(this.props.placeholder) ? "" : this.props.placeholder;
     const display = (
       <div className="input-field col s6">
-        <input id={this.props.id} type="text" className="validate"/>
+        <input id={this.props.id} placeholder={placeholder} type="text" className="validate"/>
         <label htmlFor={this.props.id}>{this.props.label}</label>
       </div>
     );

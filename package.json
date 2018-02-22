@@ -43,6 +43,7 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
+    "@types/jquery": "^3.3.0",
     "@types/node": "^9.4.6",
     "@types/storybook__react": "^3.0.7",
     "@types/uuid": "^3.4.3",
