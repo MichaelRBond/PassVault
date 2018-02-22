@@ -86,9 +86,24 @@ export default class extends React.Component<ComponentProps, ComponentState> {
   }
 
   // TODO : Type return better
-  private async getFavorites(): Promise<string> {
+  private async getFavorites(): Promise<any> {
     const favorites = await this.props.vault.getFavorites();
-    return favorites.join(" -- ");
+    return favorites.map((f) => {
+      return (
+      <div>
+        {f}
+        <a href="">
+          <i className="material-icons">person</i>
+        </a>
+        <a href="">
+          <i className="material-icons">lock</i>
+        </a>
+        <a href="">
+          <i className="material-icons">more_vert</i>
+        </a>
+      </div>
+      );
+    });
   }
 
   private async getNotes(): Promise<string> {
