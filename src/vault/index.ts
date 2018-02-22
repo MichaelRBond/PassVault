@@ -105,7 +105,7 @@ export default class Vault {
     public async testConnection(hostname: string): Promise<boolean> {
         try {
             await this.http.request({
-                baseURL: `${this.url}/v1`,
+                baseURL: `${hostname}/v1`,
                 url: `/sys/health?standbyok`,
                 method: "GET",
             });
