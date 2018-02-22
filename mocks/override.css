@@ -38,3 +38,21 @@
 .pad-right-20 {
   margin-right: 20px;
 }
+
+.initial-position {
+  position: initial !important;
+  margin-left: 50px;
+  font-size: 10px;
+}
+
+.font-18 {
+  font-size: 18px !important;
+}
+
+.height-1 {
+  height:1.5rem;
+}
+
+.input-field {
+  margin-top: 0;
+}
