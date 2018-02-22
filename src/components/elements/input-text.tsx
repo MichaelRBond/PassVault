@@ -7,6 +7,7 @@ interface ComponentProps {
   placeholder?: string;
   validate?: boolean;
   type?: string;
+  value?: any;
 }
 
 export default class InputText extends React.Component<ComponentProps, {}> {
@@ -26,6 +27,7 @@ export default class InputText extends React.Component<ComponentProps, {}> {
         type={type}
         className={className}
         onChange={this.props.onChangeHandler}
+        value={this.props.value}
       />
     );
     return display;

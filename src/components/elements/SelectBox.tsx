@@ -30,9 +30,9 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
                 {
                     this.props.options.map((option) => {
                         return (
-                            <option 
-                                disabled={option.disabled} 
-                                selected={option.selected} 
+                            <option
+                                disabled={option.disabled}
+                                selected={option.selected}
                                 value={option.value}
                             >
                                 {option.label}

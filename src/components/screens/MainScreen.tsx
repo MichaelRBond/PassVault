@@ -1,14 +1,41 @@
 import * as React from "react";
-
+import Vault from "../../vault";
 import MenuList from "../elements/MenuList";
 import SearchBox from "../elements/SearchBox";
 
 interface ComponentProps {
   handleTestConnection?: any;
   handleConfirm?: any;
+  vault: Vault;
 }
 
-export default class extends React.Component<ComponentProps, {}> {
+interface ComponentState {
+  favorites: string;
+  notes: string;
+}
+
+export default class extends React.Component<ComponentProps, ComponentState> {
+
+  constructor(props: ComponentProps) {
+    super(props);
+    this.state = {
+      favorites: "Loading ...",
+      notes: "Loading ...",
+    };
+  }
+
+  public async componentDidMount(): Promise<void> {
+    const [favorites, notes] = await Promise.all([
+      this.getFavorites(),
+      this.getNotes(),
+    ]);
+    this.setState({
+      ...this.state,
+      favorites,
+      notes,
+    });
+  }
+
   public handleTestConnection(e: Event) {
     if (this.props.handleTestConnection) {
       this.props.handleTestConnection(e);
@@ -35,7 +62,7 @@ export default class extends React.Component<ComponentProps, {}> {
         <MenuList items={[{
             title: "Favorites",
             icon: "favorite",
-            content: "foo",
+            content: this.state.favorites,
           },
           {
             title: "Website Passwords",
@@ -51,9 +78,20 @@ export default class extends React.Component<ComponentProps, {}> {
             title: "Passwords Generator",
             icon: "lock",
             content: "rab",
+            url: "http://slashdot.org",
           },
         ]}/>
       </div>
     );
+  }
+
+  // TODO : Type return better
+  private async getFavorites(): Promise<string> {
+    const favorites = await this.props.vault.getFavorites();
+    return favorites.join(" -- ");
+  }
+
+  private async getNotes(): Promise<string> {
+    return "These are my notes";
   }
 }
