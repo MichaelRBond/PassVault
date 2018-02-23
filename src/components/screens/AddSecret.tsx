@@ -260,7 +260,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       notes: this.state.notes,
     };
     await this.props.vault.savePassword(secret, this.state.folder);
-    window.location = "/#/main";
+    window.location = "#/main";
     return;
   }
 
