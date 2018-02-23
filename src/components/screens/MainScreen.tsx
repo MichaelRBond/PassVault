@@ -95,8 +95,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
   private async getFavorites(): Promise<any> {
     const favorites = await this.props.vault.getFavorites();
     return favorites.map((fav) => {
-      const folder = ""; // Secret and folder need parsed from fav
-      const secret = fav; // Secret and folder need parsed from fav
+      const [folder, secret] = fav.split("%%%");
       const prettyUrl = getPrettyUrl(secret);
       const url = buildUrlFromStr(secret);
       return (
