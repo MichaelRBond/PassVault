@@ -27,6 +27,7 @@ interface ComponentState {
   notes: string;
   togglePassword: string;
   editor: boolean;
+  modified: boolean;
 }
 
 declare var window: any;
@@ -48,6 +49,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       notes: "",
       togglePassword: "password",
       editor: false,
+      modified: false,
     };
 
     this.saveSecret = this.saveSecret.bind(this);
@@ -58,6 +60,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.updateUsername = this.updateUsername.bind(this);
     this.updateWebsite = this.updateWebsite.bind(this);
     this.togglePassword = this.togglePassword.bind(this);
+    this.deleteSecret = this.deleteSecret.bind(this);
   }
 
   public async componentDidMount() {
@@ -68,9 +71,10 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       return;
     }
 
-    const password = await this.props.vault.getPassword(`${folder}${secret}`);
+    const password = await this.props.vault.getPassword(`${folder}/${secret}`);
     // TODO : check to make sure that we a password back
     this.setState({
+      ...this.state,
       name: password.name,
       website: password.url,
       username: password.username,
@@ -223,9 +227,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           <div className="valign-wrapper">
             <h5>
               <Hidden when={!this.state.editor}>
-                <a href="test.com" className="grey-text text-darken-1">
-                  <i className="material-icons small">delete</i>
-                </a>
+                <i className="material-icons small" onClick={this.deleteSecret}>delete</i>
               </Hidden>
             </h5>
           </div>
@@ -269,6 +271,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.setState({
       ...this.state,
       name: event.currentTarget.value,
+      modified: true,
     });
   }
 
@@ -276,6 +279,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.setState({
       ...this.state,
       website: event.currentTarget.value,
+      modified: true,
     });
   }
 
@@ -283,6 +287,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.setState({
       ...this.state,
       username: event.currentTarget.value,
+      modified: true,
     });
   }
 
@@ -290,6 +295,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.setState({
       ...this.state,
       password: event.currentTarget.value,
+      modified: true,
     });
   }
 
@@ -297,6 +303,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.setState({
       ...this.state,
       folder: event.currentTarget.value,
+      modified: true,
     });
   }
 
@@ -304,6 +311,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.setState({
       ...this.state,
       notes: event.currentTarget.value,
+      modified: true,
     });
   }
 
@@ -315,5 +323,14 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     });
     const passwordInput = document.getElementById("password");
     passwordInput.type = togglePassword;
+  }
+
+  private async deleteSecret(): Promise<void> {
+    if (this.state.modified) {
+      return;
+    }
+    await this.props.vault.deletePassword(this.state.name, this.state.folder);
+    window.location = "#/main";
+    return;
   }
 }

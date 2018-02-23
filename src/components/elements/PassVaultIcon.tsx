@@ -50,7 +50,11 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
       case "user":
         return this.copyStringToClipboard(result.username);
       case "edit":
-        window.location = `#/saveSecret?&folder=${this.props.folder}&secret=${this.props.secret}`;
+        let folder = this.props.folder;
+        if (/\/$/.test(folder)) {
+          folder = folder.substring(0, folder.length - 1);
+        }
+        window.location = `#/saveSecret?&folder=${folder}&secret=${this.props.secret}`;
         break;
       default:
         logger.error("Invalid event type");
