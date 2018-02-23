@@ -15,6 +15,9 @@ export interface Password {
 // FIXME: Remove all state from the client. State should be a map in the model, to allow for multiple vault
 // connections, using the vault URL as the primary key.
 export default class Vault {
+
+  // TODO : Add an in memory cache here. Cache all requests for passwords with a TTL
+
     public static PREFERENCES_SECRET = "preferences";
     public static FOLDERS = "passwords";
 
@@ -143,7 +146,10 @@ export default class Vault {
     return(result);
   }
 
-  public async getPassword(path: string): Promise<Password> {
+  public async getPassword(secretPath: string): Promise<Password> {
+    // TODO : attempt to read from cache. if it is in the cache, return. Otherwise
+    // call vault
+    const path = `${Vault.FOLDERS}/${secretPath}`;
     const response = await this.read(path);
     return response.data.data;
   }

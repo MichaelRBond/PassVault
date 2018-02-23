@@ -46,6 +46,7 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
       ...this.state,
       password,
     });
+    return;
   }
 
   public setRememberPassword(remember: boolean) {
@@ -53,9 +54,10 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
       ...this.state,
       rememberLogin: remember,
     });
+    return;
   }
 
-  public async tryLogin() {
+  public async tryLogin(): Promise<void> {
     try {
       await this.props.vaultClient.login(this.state.username, this.state.password);
       if (this.state.rememberLogin) {
@@ -67,6 +69,7 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
     } catch {
       window.alert("login invalid");
     }
+    return;
   }
 
   public render() {

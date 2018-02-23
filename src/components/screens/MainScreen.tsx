@@ -2,6 +2,7 @@ import * as React from "react";
 import { buildUrlFromStr, getPrettyUrl } from "../../utils/helpers";
 import Vault from "../../vault";
 import MenuList from "../elements/MenuList";
+import PassVaultIcon from "../elements/PassVaultIcon";
 import SearchBox from "../elements/SearchBox";
 
 interface ComponentProps {
@@ -137,17 +138,28 @@ export default class extends React.Component<ComponentProps, ComponentState> {
           <ul>
             {
               websites.map((w) => {
+                const prettyUrl = getPrettyUrl(w);
+                const url = buildUrlFromStr(w);
                 return (<li>
-                  {w}
-                  <a href="">
-                    <i className="material-icons">person</i>
-                  </a>
-                  <a href="">
-                    <i className="material-icons">lock</i>
-                  </a>
-                  <a href="">
-                    <i className="material-icons">more_vert</i>
-                  </a>
+                  <a href={url}>{prettyUrl}</a>
+                  <PassVaultIcon
+                    type="user"
+                    folder={f}
+                    secret={w}
+                    vault={this.props.vault}
+                  />
+                  <PassVaultIcon
+                    type="password"
+                    folder={f}
+                    secret={w}
+                    vault={this.props.vault}
+                  />
+                  <PassVaultIcon
+                    type="edit"
+                    folder={f}
+                    secret={w}
+                    vault={this.props.vault}
+                  />
                 </li>);
               })
             }
