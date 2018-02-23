@@ -10,15 +10,17 @@ export interface Password {
     notes?: string;
 }
 
+// TODO : Refactor the vault client so that the vault client is simply the client and all
+// business logic is moved into a PassVault-model.
+// FIXME: Remove all state from the client. State should be a map in the model, to allow for multiple vault
+// connections, using the vault URL as the primary key.
 export default class Vault {
     public static PREFERENCES_SECRET = "preferences";
     public static FOLDERS = "passwords";
 
-    // FIXME: Saving username state here will make it harder to have multiple valut servers configured
-    private username: string;
-    private token: string = null; // TODO : Optional
-    private url: string; // can't pass into the constructor, because we create the object as
-                         // react is starting up
+    private username: string; // FIXME: See note above
+    private token: string = null; // FIXME: See Note above TODO : Optional instead of null
+    private url: string; // FIXME: See note above
 
     public constructor(
         private http: HttpClient,

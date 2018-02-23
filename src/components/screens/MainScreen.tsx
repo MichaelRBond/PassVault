@@ -90,7 +90,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
     );
   }
 
-  // TODO : Type return better, check if http is in front of {f} and append as needed to fix link
+  // TODO : Type return better
   private async getFavorites(): Promise<any> {
     const favorites = await this.props.vault.getFavorites();
     return favorites.map((f) => {
