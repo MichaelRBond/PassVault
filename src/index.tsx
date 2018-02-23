@@ -5,6 +5,7 @@ import PassVault from "./components/PassVault";
 import {HttpClient} from "./utils/http";
 import Vault from "./vault/index";
 
+import "./components/icon32.png";
 import "./style.tsx";
 
 declare var document: any; // TODO : type better????
