@@ -76,7 +76,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
           {
             title: "Website Passwords",
             icon: "laptop",
-            content: this.state.folders,
+            content: <ul className="collapsible" data-collapsible="accordion"> {this.state.folders} </ul>,
           },
           {
             title: "Notes",
@@ -147,45 +147,47 @@ export default class extends React.Component<ComponentProps, ComponentState> {
     const folderPromises = folders.map(async (f) => {
       const websites = await this.props.vault.list(`${Vault.FOLDERS}/${f}`);
       return (
-        <div>
-          {f}
-            {
-              websites.map((w) => {
-                const prettyUrl = getPrettyUrl(w);
-                const url = buildUrlFromStr(w);
-                return (
-                  <div className="row">
-                    <div className="col s1 left-align">
-                      <a href="test.com" className="grey-text">
-                        <i className="material-icons prefix">personal_video</i>
-                      </a>
-                  </div>
-                  <div className="col s1 left-align">
-                    <a href={url}>{prettyUrl}</a>
-                  </div>
-                  <PassVaultIcon
-                    type="user"
-                    folder={f}
-                    secret={w}
-                    vault={this.props.vault}
-                  />
-                  <PassVaultIcon
-                    type="password"
-                    folder={f}
-                    secret={w}
-                    vault={this.props.vault}
-                  />
-                  <PassVaultIcon
-                    type="edit"
-                    folder={f}
-                    secret={w}
-                    vault={this.props.vault}
-                  />
-                  </div>
-                );
-              })
-            }
-        </div>
+          <li>
+            <div className="collapsible-header"><i className="material-icons prefix">folder</i>{f}</div>
+            <div className="collapsible-body" key={f}>
+              {
+                websites.map((w) => {
+                  const prettyUrl = getPrettyUrl(w);
+                  const url = buildUrlFromStr(w);
+                  return (
+                    <div className="row">
+                      <div className="col s1 left-align">
+                        <a href="test.com" className="grey-text">
+                          <i className="material-icons prefix">personal_video</i>
+                        </a>
+                      </div>
+                      <div className="col s5 offset-s1 left-align">
+                        <a href={url}>{prettyUrl}</a>
+                      </div>
+                      <PassVaultIcon
+                        type="user"
+                        folder={f}
+                        secret={w}
+                        vault={this.props.vault}
+                      />
+                      <PassVaultIcon
+                        type="password"
+                        folder={f}
+                        secret={w}
+                        vault={this.props.vault}
+                      />
+                      <PassVaultIcon
+                        type="edit"
+                        folder={f}
+                        secret={w}
+                        vault={this.props.vault}
+                      />
+                    </div>
+                  );
+                })
+              }
+            </div>
+          </li>
       );
     });
     const ret = await Promise.all(folderPromises);
