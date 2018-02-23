@@ -16,6 +16,7 @@ interface ComponentState {
   favorites: any;
   notes: string;
   folders: any;
+  searchResults: any;
 }
 
 declare var window: any;
@@ -28,6 +29,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
       favorites: "Loading ...",
       notes: "Loading ...",
       folders: "Loading ...",
+      searchResults: null,
     };
   }
 
@@ -61,42 +63,106 @@ export default class extends React.Component<ComponentProps, ComponentState> {
     //
   }
 
+  public async search(e: Event) {
+    if (!e || !e.target) {
+      return;  // NOT SURE HOW TO FIX LINT HERE
+    }
+
+    const query = e.target.value;
+
+    if (query.length === 0) {
+      return this.setState({
+        ...this.state,
+        searchResults: null,
+      });
+    }
+
+    const vault = this.props.vault;
+
+    const folders = await vault.getFolders();
+
+    const listPromises = folders.map((f) => {
+      return vault.list(`passwords/${f}`);
+    });
+
+    const listResponses = await Promise.all(listPromises);
+
+    const results = listResponses
+      .reduce((p, c) => {
+        p = p.concat(c);
+        return p;
+      }, [])
+      .map((r, i) => {
+        return {
+          key: r,
+          folder: folders[i],
+          fullPath: `passwords/${folders[i]}${r}`,
+        };
+      });
+
+    const filtered = results.filter((r) => {
+      return r.fullPath.includes(query);
+    });
+
+    this.setState({
+      ...this.state,
+      searchResults: filtered,
+    });
+  }
+
   public render() {
+    let searchResults = null;
+    let menuList = null;
+
+    if (this.state.searchResults) {
+      searchResults = (
+        <pre>{JSON.stringify(this.state.searchResults, null, 2)}</pre>
+      );
+    } else {
+      menuList =  (
+        <div>
+          <MenuList items={[{
+              title: "Favorites",
+              icon: "favorite",
+              content: this.state.favorites,
+            },
+            {
+              title: "Website Passwords",
+              icon: "laptop",
+              content: <ul className="collapsible" data-collapsible="accordion"> {this.state.folders} </ul>,
+            },
+            {
+              title: "Notes",
+              icon: "notes",
+              content: "oof",
+            },
+            {
+              title: "Passwords Generator",
+              icon: "lock",
+              content: "rab",
+              url: "#/passwordGenerator",
+            },
+          ]}/>
+          <div className="col center-align pad-top-50">
+              <ConfirmButton
+                text="Add Password"
+                onclickHandler={() => window.location = "#/saveSecret"}
+                type=""
+              />
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div>
         <SearchBox
           id="search"
           placeholder="Search websites and notes"
+          onChangeHandler={(e: Event) => this.search(e)}
         />
-        <MenuList items={[{
-            title: "Favorites",
-            icon: "favorite",
-            content: this.state.favorites,
-          },
-          {
-            title: "Website Passwords",
-            icon: "laptop",
-            content: <ul className="collapsible" data-collapsible="accordion"> {this.state.folders} </ul>,
-          },
-          {
-            title: "Notes",
-            icon: "notes",
-            content: "oof",
-          },
-          {
-            title: "Passwords Generator",
-            icon: "lock",
-            content: "rab",
-            url: "#/passwordGenerator",
-          },
-        ]}/>
-        <div className="col center-align pad-top-50">
-            <ConfirmButton
-              text="Add Password"
-              onclickHandler={() => window.location = "#/saveSecret"}
-              type=""
-            />
-        </div>
+        {searchResults}
+        {menuList}
       </div>
     );
   }
