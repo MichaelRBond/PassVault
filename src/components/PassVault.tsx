@@ -3,6 +3,7 @@ import * as React from "react";
 import { Route, Router, Switch } from "react-router";
 import Vault from "../vault";
 import Chrome from "./Chrome";
+import AddSecret from "./screens/AddSecret";
 import LoginScreen from "./screens/LoginScreen";
 import MainScreen from "./screens/MainScreen";
 import PasswordGenerator from "./screens/PasswordGenerator";
@@ -68,6 +69,9 @@ export default class PassVault extends React.Component<ComponentProps, Component
             </Route>
             <Route path="/passwordGenerator">
               <PasswordGenerator />
+            </Route>
+            <Route path="/saveSecret">
+              <AddSecret vault={this.props.vault} />
             </Route>
           </Switch>
         </Chrome>

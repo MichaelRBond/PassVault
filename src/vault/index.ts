@@ -1,9 +1,11 @@
 import { AxiosResponse } from "axios";
 import { isNullOrUndefined } from "util";
+import { isBlank } from "../utils/helpers";
 import { HttpClient } from "../utils/http";
 import { Logger } from "../utils/logger";
 
 export interface Password {
+    name: string;
     url?: string;
     username: string;
     password: string;
@@ -155,7 +157,11 @@ export default class Vault {
   }
 
   // TODO : don't return axios response
-  public savePassword(path: string, password: Password): Promise<AxiosResponse> {
+  public savePassword(password: Password, folder: string): Promise<AxiosResponse> {
+    if (isBlank(folder)) {
+      folder = "default";
+    }
+    const path = `${Vault.FOLDERS}/${folder}/${password.name}`;
     return this.write(path, password);
   }
 
