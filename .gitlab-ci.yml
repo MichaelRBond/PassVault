@@ -6,11 +6,23 @@ cache:
 
 stages:
   - test
+  - build
 
 test:
   stage: test
   script:
    - npm install -g yarn
    - yarn install
-   - yarn test
+   - yarn run test
+   - yarn run lint
 
+build:
+  stage: build
+  script:
+   - npm install -g yarn
+   - yarn install
+   - yarn run package
+  artifacts:
+    paths:
+      - build/passvault.zip
+      - build/passvault.xpi
