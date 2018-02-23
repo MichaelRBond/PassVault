@@ -10,17 +10,21 @@
     "test": "jest --coverage --no-cache",
     "verify": "yarn lint && yarn build && yarn test",
     "start": "webpack-dev-server --hot --port 3000 --host 0.0.0.0",
-    "package": "rm -rf build/ && webpack && cp manifest.json build/ && cd build && zip -r passvault.zip ./* && cp passvault.zip passvault.xpi",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "package": "rm -rf build/ && webpack && cp manifest.json build/ && cd build && zip -r passvault.zip ./* && cp passvault.zip passvault.xpi"
   },
   "devDependencies": {
-    "@storybook/react": "^3.3.14",
     "@types/chai": "^4.0.10",
     "@types/jest": "^22.0.1",
+    "@types/jquery": "^3.3.0",
     "@types/mocha": "^2.2.44",
+    "@types/node": "^9.4.6",
     "@types/react": "^16.0.38",
     "@types/react-bootstrap": "^0.32.1",
     "@types/react-dom": "^0.14.22",
+    "@types/react-router": "^4.0.22",
+    "@types/react-router-dom": "^4.2.4",
+    "@types/query-string": "^5.1.0",
+    "@types/uuid": "^3.4.3",
     "babel-core": "^6.26.0",
     "chai": "^4.1.2",
     "copy-webpack-plugin": "^4.1.1",
@@ -43,13 +47,6 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
-    "@types/jquery": "^3.3.0",
-    "@types/node": "^9.4.6",
-    "@types/query-string": "^5.1.0",
-    "@types/react-router": "^4.0.22",
-    "@types/react-router-dom": "^4.2.4",
-    "@types/storybook__react": "^3.0.7",
-    "@types/uuid": "^3.4.3",
     "awesome-typescript-loader": "^3.4.1",
     "axios": "^0.16.1",
     "css-loader": "^0.28.9",
