@@ -8,6 +8,7 @@ import ConfirmButton from "../elements/ConfirmButton";
 import TextArea from "../elements/TextArea";
 import TextInput from "../elements/TextInput";
 
+declare var document: any;
 declare var window: any;
 
 const logger = new Logger("AddSecret");
@@ -23,6 +24,7 @@ interface ComponentState {
   password: string;
   folder: string;
   notes: string;
+  togglePassword: string;
 }
 
 declare var window: any;
@@ -42,6 +44,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       password: "",
       folder: "",
       notes: "",
+      togglePassword: "password",
     };
 
     this.saveSecret = this.saveSecret.bind(this);
@@ -51,6 +54,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.updatePassword = this.updatePassword.bind(this);
     this.updateUsername = this.updateUsername.bind(this);
     this.updateWebsite = this.updateWebsite.bind(this);
+    this.togglePassword = this.togglePassword.bind(this);
   }
 
   public async componentDidMount() {
@@ -161,9 +165,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
         />
         <div className="col s1 left-align">
           <h5>
-            <a href="test.com" className="grey-text text-darken-1">
-              <i className="material-icons small">remove_red_eye</i>
-            </a>
+            <i className="material-icons small" onClick={this.togglePassword}>remove_red_eye</i>
           </h5>
         </div>
         <div className="col s1 left-align">
@@ -295,5 +297,15 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       ...this.state,
       notes: event.currentTarget.value,
     });
+  }
+
+  private togglePassword(): void {
+    const togglePassword = this.state.togglePassword === "password" ? "text" : "password";
+    this.setState({
+      ...this.state,
+      togglePassword,
+    });
+    const passwordInput = document.getElementById("password");
+    passwordInput.type = togglePassword;
   }
 }
