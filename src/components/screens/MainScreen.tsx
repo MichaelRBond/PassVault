@@ -94,9 +94,11 @@ export default class extends React.Component<ComponentProps, ComponentState> {
   // TODO : Type return better
   private async getFavorites(): Promise<any> {
     const favorites = await this.props.vault.getFavorites();
-    return favorites.map((f) => {
-      const prettyUrl = getPrettyUrl(f);
-      const url = buildUrlFromStr(f);
+    return favorites.map((fav) => {
+      const folder = ""; // Secret and folder need parsed from fav
+      const secret = fav; // Secret and folder need parsed from fav
+      const prettyUrl = getPrettyUrl(secret);
+      const url = buildUrlFromStr(secret);
       return (
         <div className="row">
           <div className="col s1 left-align">
@@ -107,21 +109,24 @@ export default class extends React.Component<ComponentProps, ComponentState> {
           <div className="col s6 offset-s1 left-align">
             <a href={url}>{prettyUrl}</a>
           </div>
-          <div className="col s1 center-align">
-              <a href="#" className="grey-text">
-                  <i className="material-icons prefix">person</i>
-              </a>
-          </div>
-          <div className="col s1 center-align">
-              <a href="#" className="grey-text">
-                  <i className="material-icons prefix">lock</i>
-              </a>
-          </div>
-          <div className="col s1 center-align">
-              <a href="#" className="grey-text">
-                  <i className="material-icons prefix">mode_edit</i>
-              </a>
-          </div>
+          <PassVaultIcon
+            type="user"
+            folder={folder}
+            secret={secret}
+            vault={this.props.vault}
+          />
+          <PassVaultIcon
+            type="password"
+            folder={folder}
+            secret={secret}
+            vault={this.props.vault}
+          />
+          <PassVaultIcon
+            type="edit"
+            folder={folder}
+            secret={secret}
+            vault={this.props.vault}
+          />
         </div>
         );
       });

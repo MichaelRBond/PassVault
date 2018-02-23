@@ -20,7 +20,8 @@
       }
     },
     "permissions": [
-      "activeTab"
+      "activeTab",
+      "clipboardWrite"
     ],
     "browser_action": {
       "default_title": "PassVault",
@@ -33,4 +34,3 @@
       }
     }
   }
-  
