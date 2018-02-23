@@ -3,6 +3,7 @@ import { Logger } from "../../utils/logger";
 import Vault, { Password } from "../../vault";
 
 declare var document: any;
+declare var window: any;
 
 const logger = new Logger("PassVaultIcon");
 
@@ -45,11 +46,12 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
   private handleClick(result: Password): void {
     switch (this.props.type) {
       case "password":
-        logger.info("PASSWORD: ", result.password);
         return this.copyStringToClipboard(result.password);
       case "user":
-        logger.info("USER: ", result.username);
         return this.copyStringToClipboard(result.username);
+      case "edit":
+        window.location = `#/saveSecret?&folder=${this.props.folder}&secret=${this.props.secret}`;
+        break;
       default:
         logger.error("Invalid event type");
         return;

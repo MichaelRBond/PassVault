@@ -45,6 +45,7 @@
   "dependencies": {
     "@types/jquery": "^3.3.0",
     "@types/node": "^9.4.6",
+    "@types/query-string": "^5.1.0",
     "@types/react-router": "^4.0.22",
     "@types/react-router-dom": "^4.2.4",
     "@types/storybook__react": "^3.0.7",
@@ -61,6 +62,7 @@
     "materialize-css": "^0.100.2",
     "materialize-loader": "^2.0.2",
     "node-sass": "^4.7.2",
+    "query-string": "^5.1.0",
     "react-bootstrap": "^0.32.1",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",

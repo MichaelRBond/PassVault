@@ -1,10 +1,15 @@
+import * as QueryString from "query-string";
 import * as React from "react";
+import {isBlank} from "../../utils/helpers";
 import { Logger } from "../../utils/logger";
 import Vault, {Password} from "../../vault";
 import CancelButton from "../elements/CancelButton";
 import ConfirmButton from "../elements/ConfirmButton";
 import TextArea from "../elements/TextArea";
 import TextInput from "../elements/TextInput";
+
+declare var document: any;
+declare var window: any;
 
 const logger = new Logger("AddSecret");
 
@@ -19,6 +24,7 @@ interface ComponentState {
   password: string;
   folder: string;
   notes: string;
+  togglePassword: string;
 }
 
 declare var window: any;
@@ -38,6 +44,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       password: "",
       folder: "",
       notes: "",
+      togglePassword: "password",
     };
 
     this.saveSecret = this.saveSecret.bind(this);
@@ -47,6 +54,28 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.updatePassword = this.updatePassword.bind(this);
     this.updateUsername = this.updateUsername.bind(this);
     this.updateWebsite = this.updateWebsite.bind(this);
+    this.togglePassword = this.togglePassword.bind(this);
+  }
+
+  public async componentDidMount() {
+    const secret = QueryString.parse(window.location.hash).secret;
+    const folder = QueryString.parse(window.location.hash).folder;
+
+    if (isBlank(secret) || isBlank(folder)) {
+      return;
+    }
+
+    const password = await this.props.vault.getPassword(`${folder}${secret}`);
+    // TODO : check to make sure that we a password back
+    this.setState({
+      name: password.name,
+      website: password.url,
+      username: password.username,
+      password: password.password,
+      folder,
+      notes: password.notes,
+    });
+
   }
 
   public render() {
@@ -72,6 +101,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
               placeholder="Website.Com"
               colSize={12}
               onChangeHandler={this.updateName}
+              value={this.state.name}
             />
           </h5>
         </div>
@@ -92,6 +122,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           placeholder="website.com"
           colSize={10}
           onChangeHandler={this.updateWebsite}
+          value={this.state.website}
         />
         <div className="col s1 left-align">
           <h5>
@@ -110,6 +141,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           placeholder="username"
           colSize={10}
           onChangeHandler={this.updateUsername}
+          value={this.state.username}
         />
         <div className="col s1 left-align">
           <h5>
@@ -129,12 +161,11 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           placeholder="****************"
           colSize={9}
           onChangeHandler={this.updatePassword}
+          value={this.state.password}
         />
         <div className="col s1 left-align">
           <h5>
-            <a href="test.com" className="grey-text text-darken-1">
-              <i className="material-icons small">remove_red_eye</i>
-            </a>
+            <i className="material-icons small" onClick={this.togglePassword}>remove_red_eye</i>
           </h5>
         </div>
         <div className="col s1 left-align">
@@ -154,6 +185,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           placeholder="folder-name"
           colSize={10}
           onChangeHandler={this.updateFolder}
+          value={this.state.folder}
         />
         {/* TODO : This should be a select box instead of the free text field above */}
         {/* <select>
@@ -174,6 +206,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           <TextArea
             id="notes"
             onChangeHandler={this.updateNotes}
+            value={this.state.notes}
             label="Notes"
             colSize={12}
           />
@@ -192,7 +225,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
         <div className="col s5">
           {/* TODO: What do we do on a cancel event */}
           <CancelButton
-            onclickHandler={undefined}
+            onclickHandler={() => {window.location = "#/main"; }}
           />
         </div>
         <div className="col s5">
@@ -264,5 +297,15 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       ...this.state,
       notes: event.currentTarget.value,
     });
+  }
+
+  private togglePassword(): void {
+    const togglePassword = this.state.togglePassword === "password" ? "text" : "password";
+    this.setState({
+      ...this.state,
+      togglePassword,
+    });
+    const passwordInput = document.getElementById("password");
+    passwordInput.type = togglePassword;
   }
 }
