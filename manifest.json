@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "homepage_url": "https://gitlab.com/nyxcharon/passvault",
     "icons": {
-      "64": "icon-64.png"
+      "64": "97bd5cf415efbbdfed3d25af38ae65c3.png"
     },
     "content_security_policy": "default-src 'self'; script-src 'self'; style-src https://fonts.googleapis.com 'self' 'unsafe-inline'; font-src https://fonts.gstatic.com; connect-src *",
     "commands": {
@@ -25,7 +25,7 @@
     ],
     "browser_action": {
       "default_title": "PassVault",
-      "default_icon": "icon-32.png",
+      "default_icon": "97bd5cf415efbbdfed3d25af38ae65c3.png",
       "default_popup": "index.html"
     },
     "applications": {
