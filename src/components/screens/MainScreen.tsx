@@ -140,13 +140,20 @@ export default class extends React.Component<ComponentProps, ComponentState> {
       return (
         <div>
           {f}
-          <ul>
             {
               websites.map((w) => {
                 const prettyUrl = getPrettyUrl(w);
                 const url = buildUrlFromStr(w);
-                return (<li>
-                  <a href={url}>{prettyUrl}</a>
+                return (
+                  <div className="row">
+                    <div className="col s1 left-align">
+                      <a href="test.com" className="grey-text">
+                        <i className="material-icons prefix">personal_video</i>
+                      </a>
+                  </div>
+                  <div className="col s1 left-align">
+                    <a href={url}>{prettyUrl}</a>
+                  </div>
                   <PassVaultIcon
                     type="user"
                     folder={f}
@@ -165,10 +172,10 @@ export default class extends React.Component<ComponentProps, ComponentState> {
                     secret={w}
                     vault={this.props.vault}
                   />
-                </li>);
+                  </div>
+                );
               })
             }
-          </ul>
         </div>
       );
     });
