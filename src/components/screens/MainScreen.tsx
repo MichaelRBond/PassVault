@@ -63,7 +63,8 @@ export default class extends React.Component<ComponentProps, ComponentState> {
     //
   }
 
-  public async search(e: Event) {
+  // FIXME: e should be type `Event`
+  public async search(e: any) {
     if (!e || !e.target) {
       return;  // NOT SURE HOW TO FIX LINT HERE
     }

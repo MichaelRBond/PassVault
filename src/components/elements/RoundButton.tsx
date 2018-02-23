@@ -14,7 +14,11 @@ export default class RoundButton extends React.Component<ComponentProps, any> {
   public render() {
     return (
       <span>
-        <a className="btn-floating teal" onClick={this.props.onclickHandler} style={{"margin-top": ((this.props.margin) ? `${this.props.margin}px` : "0px")}}>
+        <a
+          className="btn-floating teal"
+          onClick={this.props.onclickHandler}
+          style={{"margin-top": ((this.props.margin) ? `${this.props.margin}px` : "0px")}}
+        >
           <i className="small material-icons">refresh</i>
         </a>  {this.props.text && this.props.text}
       </span>

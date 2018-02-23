@@ -14,8 +14,8 @@ interface Item {
 }
 
 export default class extends React.Component<ComponentProps, {}> {
-  componentDidMount() {
-    ($('.collapsible') as any).collapsible();
+  public componentDidMount() {
+    ($(".collapsible") as any).collapsible();
   }
 
   public render() {
