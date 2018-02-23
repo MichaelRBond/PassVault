@@ -25,7 +25,7 @@ export default class extends React.Component<ComponentProps, {}> {
           <div className="collapsible-header">
             <i className="material-icons left">{i.icon}</i>
             {/* FIXME: OMG. So. Bad. */}
-            { i.url ? (<a href={i.url}>{i.title}</a>) : i.title }
+            { i.url ? (<a className="black-text" href={i.url}>{i.title}</a>) : i.title }
             <i className="material-icons right">chevron_right</i>
           </div>
           <div className="collapsible-body">
