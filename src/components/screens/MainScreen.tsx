@@ -93,7 +93,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
         <div className="col center-align pad-top-50">
             <ConfirmButton
               text="Add Password"
-              onclickHandler={() => window.location = "#/addPassword"}
+              onclickHandler={() => window.location = "#/saveSecret"}
               type=""
             />
         </div>

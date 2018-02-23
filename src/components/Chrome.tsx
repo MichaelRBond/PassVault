@@ -5,7 +5,7 @@ import "./Chrome.scss";
 export default class extends React.Component {
   public render() {
     return (
-      <div className="chrome">
+      <div className="chrome" style={{overflow: "scroll"}}>
         <nav>
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="right hide-on-med-and-down">
