@@ -19,7 +19,7 @@ test:
 build:
   stage: build
   before_script:
-   - apt-get update -y && apt-get install -u zip
+   - apt-get update -y && apt-get install -y zip
   script:
    - npm install -g yarn
    - yarn install
