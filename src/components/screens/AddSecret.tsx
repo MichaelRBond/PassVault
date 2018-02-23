@@ -7,6 +7,7 @@ import CancelButton from "../elements/CancelButton";
 import ConfirmButton from "../elements/ConfirmButton";
 import TextArea from "../elements/TextArea";
 import TextInput from "../elements/TextInput";
+import Hidden from "../Hidden";
 
 declare var document: any;
 declare var window: any;
@@ -25,6 +26,7 @@ interface ComponentState {
   folder: string;
   notes: string;
   togglePassword: string;
+  editor: boolean;
 }
 
 declare var window: any;
@@ -45,6 +47,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       folder: "",
       notes: "",
       togglePassword: "password",
+      editor: false,
     };
 
     this.saveSecret = this.saveSecret.bind(this);
@@ -74,6 +77,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       password: password.password,
       folder,
       notes: password.notes,
+      editor: true,
     });
 
   }
@@ -107,9 +111,11 @@ export default class AddSecret extends React.Component<ComponentProps, Component
         </div>
         <div className="col s1 left-align">
           <h5>
-            <a href="test.com" className="grey-text text-darken-1">
-              <i className="material-icons prefix">favorite_border</i>
-            </a>
+            <Hidden when={!this.state.editor}>
+              <a href="test.com" className="grey-text text-darken-1">
+                <i className="material-icons prefix">favorite_border</i>
+              </a>
+            </Hidden>
           </h5>
         </div>
       </div>
@@ -216,9 +222,11 @@ export default class AddSecret extends React.Component<ComponentProps, Component
         <div className="col s1 offset-s1">
           <div className="valign-wrapper">
             <h5>
-              <a href="test.com" className="grey-text text-darken-1">
-                <i className="material-icons small">delete</i>
-              </a>
+              <Hidden when={!this.state.editor}>
+                <a href="test.com" className="grey-text text-darken-1">
+                  <i className="material-icons small">delete</i>
+                </a>
+              </Hidden>
             </h5>
           </div>
         </div>
@@ -252,7 +260,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       notes: this.state.notes,
     };
     await this.props.vault.savePassword(secret, this.state.folder);
-    window.location = "/#/main";
+    window.location = "#/main";
     return;
   }
 
