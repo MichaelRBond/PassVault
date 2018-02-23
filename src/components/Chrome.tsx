@@ -8,7 +8,7 @@ export default class extends React.Component {
       <div className="chrome" style={{"overflow-y": "scroll"}}>
         <nav>
           <div className="nav-wrapper">
-            <ul id="nav-mobile" className="right hide-on-med-and-down">
+            <ul id="nav-mobile" className="right">
             <li className="settings">
               <a href="#/settings">
                 <i className="large material-icons black-text">settings</i>
