@@ -1,4 +1,5 @@
 import * as React from "react";
+import { PassVaultEvent } from "../../models/PassVaultEvent";
 import { buildUrlFromStr, getPrettyUrl } from "../../utils/helpers";
 import Vault from "../../vault";
 import ConfirmButton from "../elements/ConfirmButton";
@@ -63,8 +64,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
     //
   }
 
-  // FIXME: e should be type `Event`
-  public async search(e: any) {
+  public async search(e: PassVaultEvent) {
     if (!e || !e.target) {
       return;  // NOT SURE HOW TO FIX LINT HERE
     }
@@ -160,7 +160,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
         <SearchBox
           id="search"
           placeholder="Search websites and notes"
-          onChangeHandler={(e: Event) => this.search(e)}
+          onChangeHandler={(e: PassVaultEvent) => this.search(e)}
         />
         {searchResults}
         {menuList}
