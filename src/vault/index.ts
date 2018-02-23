@@ -55,7 +55,10 @@ export default class Vault {
 
     // TODO : These should not be axios response types. Return `result.data` and type
     // the return better
+    // TODO : this should take a generic and return Optional<T>
     public read(path: string): Promise<AxiosResponse> {
+        // TODO : this request needs to be more tolerant of 404's and other potential errors.
+        // When a 404 is returned this should return an empty optional
         return this.http.request({
             baseURL: this.getBaseUrl(),
             url: `/${path}`,
@@ -148,11 +151,13 @@ export default class Vault {
     return(result);
   }
 
+  // TODO : SHould return an optional
   public async getPassword(secretPath: string): Promise<Password> {
     // TODO : attempt to read from cache. if it is in the cache, return. Otherwise
     // call vault
     const path = `${Vault.FOLDERS}/${secretPath}`;
     const response = await this.read(path);
+    // TODO : if we get null/optional absent back from this.read() return an empty optional
     return response.data.data;
   }
 
