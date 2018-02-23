@@ -45,10 +45,10 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
   private handleClick(result: Password): void {
     switch (this.props.type) {
       case "password":
-        console.log("PASSWORD: ", result.password);
+        logger.info("PASSWORD: ", result.password);
         return this.copyTextToClipboard(result.password);
       case "user":
-        console.log("USER: ", result.username);
+        logger.info("USER: ", result.username);
         return this.copyTextToClipboard(result.username);
       default:
         logger.error("Invalid event type");
