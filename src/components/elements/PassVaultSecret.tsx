@@ -26,7 +26,7 @@ export default class PassVaultSecret extends React.Component<ComponentProps, {}>
         <i className="material-icons prefix">personal_video</i>
         </a>
         </div>
-        <div className="col s6 offset-s1 left-align">
+        <div className="col s5 offset-s1 left-align">
           <a href={url}>{prettyUrl}</a>
         </div>
         <PassVaultIcon
