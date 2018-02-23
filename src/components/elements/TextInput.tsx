@@ -14,6 +14,7 @@ interface ComponentProps {
   validate?: boolean;
   active?: boolean;
   value?: any;
+  inline?: boolean;
 }
 
 export default class TextInput extends React.Component<ComponentProps, {}> {
@@ -27,8 +28,9 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
     const validate = this.props.validate ? true : false;
     const columnSize = isNullOrUndefined(this.props.colSize) ? DEFAULT_COL_SIZE : this.props.colSize;
     const placeholder = isNullOrUndefined(this.props.placeholder) ? "" : this.props.placeholder;
+    const inline = !!this.props.inline;
     const display = (
-      <div className={`input-field col s${columnSize}`}>
+      <div className={(inline) ? "input-field inline" : `input-field col s${columnSize}`}>
         <Input
           id={this.props.id}
           placeholder={placeholder}

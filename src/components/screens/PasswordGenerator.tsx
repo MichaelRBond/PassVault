@@ -92,10 +92,10 @@ export default class PasswordGenerator extends React.Component<{}, ComponentStat
                   <TextInput
                       id="generatedPassword"
                       validate={false}
-                      colSize={12}
+                      colSize={10}
                       value={this.state.generatedPassword}
                     />
-                    <RoundButton onclickHandler={() => this.updatePassword()} />
+                    <RoundButton onclickHandler={() => this.updatePassword()} margin={20}/>
                 </div>
                 <div className="col s12 center-align">
                     <TextInput
@@ -105,9 +105,11 @@ export default class PasswordGenerator extends React.Component<{}, ComponentStat
                       validate={true}
                       colSize={12}
                       value={this.state.passwordLength}
+                      active={true}
                       onChangeHandler={(e: any) => this.setPasswordLength(parseInt(e.currentTarget.value, 10))}
                     />
-                    <div className="col s12 center-align">
+                </div>
+                    <div className="col s12">
                         <p>
                             <Checkbox
                                 label="A-Z"
@@ -137,7 +139,6 @@ export default class PasswordGenerator extends React.Component<{}, ComponentStat
                             />
                         </p>
                     </div>
-                </div>
             </div>
           </div>
         </div>

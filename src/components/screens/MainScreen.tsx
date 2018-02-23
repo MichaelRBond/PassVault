@@ -1,6 +1,7 @@
 import * as React from "react";
 import { buildUrlFromStr, getPrettyUrl } from "../../utils/helpers";
 import Vault from "../../vault";
+import ConfirmButton from "../elements/ConfirmButton";
 import MenuList from "../elements/MenuList";
 import PassVaultIcon from "../elements/PassVaultIcon";
 import SearchBox from "../elements/SearchBox";
@@ -16,6 +17,8 @@ interface ComponentState {
   notes: string;
   folders: any;
 }
+
+declare var window: any;
 
 export default class extends React.Component<ComponentProps, ComponentState> {
 
@@ -87,6 +90,13 @@ export default class extends React.Component<ComponentProps, ComponentState> {
             url: "#/passwordGenerator",
           },
         ]}/>
+        <div className="col center-align pad-top-50">
+            <ConfirmButton
+              text="Add Password"
+              onclickHandler={() => window.location = "#/addPassword"}
+              type=""
+            />
+        </div>
       </div>
     );
   }
