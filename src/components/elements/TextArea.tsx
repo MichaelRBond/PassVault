@@ -26,8 +26,8 @@ export default class TextArea extends React.Component<ComponentProps, {}> {
           id={this.props.id}
           className="materialize-textarea"
           onChange={this.props.onChangeHandler}
-          >
-          {value}
+          value={value}
+        >
         </textarea>
         {this.props.label && (
           <label htmlFor={this.props.id}>{this.props.label}</label>

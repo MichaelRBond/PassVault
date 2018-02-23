@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Logger } from "../../utils/logger";
-import Vault from "../../vault";
+import Vault, {Password} from "../../vault";
 import CancelButton from "../elements/CancelButton";
 import ConfirmButton from "../elements/ConfirmButton";
 import TextArea from "../elements/TextArea";
@@ -12,15 +12,41 @@ interface ComponentProps {
   vault: Vault;
 }
 
+interface ComponentState {
+  name: string;
+  website: string;
+  username: string;
+  password: string;
+  folder: string;
+  notes: string;
+}
+
 declare var window: any;
 
-export default class AddSecret extends React.Component<ComponentProps, {}> {
+export default class AddSecret extends React.Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
     super(props);
 
     if (!props.vault) {
       window.location = "/#/start";
     }
+
+    this.state = {
+      name: "",
+      website: "",
+      username: "",
+      password: "",
+      folder: "",
+      notes: "",
+    };
+
+    this.saveSecret = this.saveSecret.bind(this);
+    this.updateName = this.updateName.bind(this);
+    this.updateFolder = this.updateFolder.bind(this);
+    this.updateNotes = this.updateNotes.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
+    this.updateUsername = this.updateUsername.bind(this);
+    this.updateWebsite = this.updateWebsite.bind(this);
   }
 
   public render() {
@@ -37,7 +63,17 @@ export default class AddSecret extends React.Component<ComponentProps, {}> {
           </h5>
         </div>
         <div className="col s9 left-align">
-          <h5>Website.com</h5>
+          <h5>
+            <TextInput
+              id="website-name"
+              label=""
+              active={true}
+              validate={true}
+              placeholder="Website.Com"
+              colSize={12}
+              onChangeHandler={this.updateName}
+            />
+          </h5>
         </div>
         <div className="col s1 left-align">
           <h5>
@@ -71,7 +107,7 @@ export default class AddSecret extends React.Component<ComponentProps, {}> {
           label=""
           active={true}
           validate={true}
-          placeholder="website.com"
+          placeholder="username"
           colSize={10}
           onChangeHandler={this.updateUsername}
         />
@@ -175,26 +211,57 @@ export default class AddSecret extends React.Component<ComponentProps, {}> {
 
   private async saveSecret(): Promise<void> {
     logger.info("saving secret to vault ...");
+    const secret: Password = {
+      name: this.state.name,
+      url: this.state.website,
+      username: this.state.username,
+      password: this.state.password,
+      notes: this.state.notes,
+    };
+    await this.props.vault.savePassword(secret, this.state.folder);
     return;
   }
 
-  private updateWebsite(): void {
-    //
+  // TODO : These updates can be refactored to a single method
+  private updateName(event: any): void {
+    this.setState({
+      ...this.state,
+      name: event.currentTarget.value,
+    });
   }
 
-  private updateUsername(): void {
-    //
+  private updateWebsite(event: any): void {
+    this.setState({
+      ...this.state,
+      website: event.currentTarget.value,
+    });
   }
 
-  private updatePassword(): void {
-    //
+  private updateUsername(event: any): void {
+    this.setState({
+      ...this.state,
+      username: event.currentTarget.value,
+    });
   }
 
-  private updateFolder(): void {
-    //
+  private updatePassword(event: any): void {
+    this.setState({
+      ...this.state,
+      password: event.currentTarget.value,
+    });
   }
 
-  private updateNotes(): void {
-    //
+  private updateFolder(event: any): void {
+    this.setState({
+      ...this.state,
+      folder: event.currentTarget.value,
+    });
+  }
+
+  private updateNotes(event: any): void {
+    this.setState({
+      ...this.state,
+      notes: event.currentTarget.value,
+    });
   }
 }

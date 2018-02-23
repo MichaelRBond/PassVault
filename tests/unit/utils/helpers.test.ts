@@ -1,4 +1,4 @@
-import { buildUrlFromStr, getPrettyUrl } from "utils/helpers";
+import { buildUrlFromStr, getPrettyUrl, isBlank } from "utils/helpers";
 
 describe("getPrettyUrl", () => {
   it("removes the http protocol", () => {
@@ -19,5 +19,17 @@ describe("buildUrlFromStr", () => {
   });
   it("prepends https when it doesn't begin with protocol", () => {
     expect(buildUrlFromStr("foo.com")).toEqual("https://foo.com");
+  });
+});
+
+describe("isBlank", () => {
+  it("isBlank", () => {
+    expect(isBlank(null)).toEqual(true);
+    expect(isBlank(undefined)).toEqual(true);
+    expect(isBlank("")).toEqual(true);
+
+    expect(isBlank(true)).toEqual(false);
+    expect(isBlank(false)).toEqual(false);
+    expect(isBlank("not null")).toEqual(false);
   });
 });
