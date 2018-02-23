@@ -83,6 +83,17 @@ export default class Vault {
         });
     }
 
+    public delete(path: string): Promise<AxiosResponse> {
+      return this.http.request({
+          baseURL: this.getBaseUrl(),
+          url: `/${path}`,
+          method: "DELETE",
+          headers: {
+              "X-Vault-Token": this.token,
+          },
+      });
+    }
+
     public async list(path: string): Promise<string[]> {
         const result = await this.http.request({
             baseURL: this.getBaseUrl(),
@@ -168,6 +179,14 @@ export default class Vault {
     }
     const path = `${Vault.FOLDERS}/${folder}/${password.name}`;
     return this.write(path, password);
+  }
+
+  public deletePassword(password: string, folder: string): Promise<AxiosResponse> {
+    if (isBlank(folder)) {
+      folder = "default";
+    }
+    const path = `${Vault.FOLDERS}/${folder}/${password}`;
+    return this.delete(path);
   }
 
   private getBaseUrl(): string {
