@@ -7,7 +7,7 @@
     "icons": {
       "64": "icon-64.png"
     },
-    "content_security_policy": "default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "content_security_policy": "default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval'; object-src 'self'; connect-src *",
     "commands": {
       "_execute_browser_action": {
         "suggested_key": {
