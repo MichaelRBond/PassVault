@@ -72,8 +72,14 @@
     "uuid": "^3.2.1"
   },
   "jest": {
-    "mapCoverage": true,
     "coverageDirectory": ".build/coverage/remapped",
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "src/*.ts",
+      "src/**/*.ts",
+      "!src/types/**",
+      "!**/node_modules/**"
+    ],
     "transform": {
       ".(ts)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
@@ -84,8 +90,7 @@
     ],
     "moduleDirectories": [
       "<rootDir>/node_modules",
-      "<rootDir>/src/",
-      "<rootDir>/node_modules/request/node_modules"
+      "<rootDir>/src/"
     ],
     "coverageReporters": [
       "json"

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { buildUrlFromStr, getPrettyUrl } from "../../utils/helpers";
 import Vault from "../../vault";
 import MenuList from "../elements/MenuList";
 import SearchBox from "../elements/SearchBox";
@@ -93,6 +94,8 @@ export default class extends React.Component<ComponentProps, ComponentState> {
   private async getFavorites(): Promise<any> {
     const favorites = await this.props.vault.getFavorites();
     return favorites.map((f) => {
+      const prettyUrl = getPrettyUrl(f);
+      const url = buildUrlFromStr(f);
       return (
         <div className="row">
           <div className="col s1 left-align">
@@ -101,7 +104,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
           </a>
           </div>
           <div className="col s6 offset-s1 left-align">
-            <a href={f}>{f}</a>
+            <a href={url}>{prettyUrl}</a>
           </div>
           <div className="col s1 center-align">
               <a href="#" className="grey-text">
@@ -122,8 +125,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
         );
       });
     }
-      
-    
+
   // TODO : Type return better
   private async getFolders(): Promise<any> {
     const folders = await this.props.vault.getFolders();
