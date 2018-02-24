@@ -6,7 +6,7 @@
     "no-console": true,
     "object-literal-sort-keys": false,
     "ordered-imports": true,
-    "max-classes-per-file": [true, 1],
+    "max-classes-per-file": [true, 2],
     "interface-name": [true, "never-prefix"],
     "no-unused-expression": false,
     "no-unused-expression-chai": true,
@@ -38,8 +38,8 @@
           "protected-constructor",
           "private-constructor",
           "public-instance-method",
-          "private-instance-method",
           "public-static-method",
+          "private-instance-method",
           "private-static-method"
         ]
       }

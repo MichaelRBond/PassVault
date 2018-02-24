@@ -10,7 +10,7 @@
     "test": "jest --coverage --no-cache",
     "verify": "yarn lint && yarn build && yarn test",
     "start": "webpack-dev-server --hot --port 3000 --host 0.0.0.0",
-    "package": "rm -rf build/ && webpack && cp manifest.json build/ && cd build && zip -r passvault.zip ./* && cp passvault.zip passvault.xpi"
+    "package": "yarn run lint && yarn run test && rm -rf build/ && webpack && cp manifest.json build/ && cd build && zip -r passvault.zip ./* && cp passvault.zip passvault.xpi"
   },
   "devDependencies": {
     "@types/chai": "^4.0.10",
