@@ -85,14 +85,16 @@
     "testRegex": ".*\\.test.ts$",
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules",
-      "<rootDir>/test/"
+      "<rootDir>/test/",
+      "<rootDir>/src/utils/http.ts",
+      "<rootDir>/src/utils/logger.ts"
     ],
     "moduleDirectories": [
       "<rootDir>/node_modules",
       "<rootDir>/src/"
     ],
     "coverageReporters": [
-      "json"
+      "json", "text"
     ],
     "moduleFileExtensions": [
       "ts",

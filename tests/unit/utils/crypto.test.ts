@@ -14,6 +14,19 @@ describe("generate Password", () => {
     expect(password.length).toEqual(len);
   });
 
+  it("generates a password of the correct length when options are false", () => {
+    const len = length();
+    const options = {
+      capitals: false,
+      lowercase: false,
+      numbers: false,
+      symbols: false,
+      more_symbols: false,
+    };
+    const password = generatePassword(len, options);
+    expect(password.length).toEqual(len);
+  });
+
   it("generates a password of the correct length with only capitals", () => {
     const len = length();
     const password = generatePassword(len, {capitals});
@@ -50,7 +63,7 @@ describe("generate Password", () => {
   });
 
   it("generates a password using multiple options and at least 1 of each option is in password", () => {
-    const password = generatePassword(5, {capitals, lowercase, symbols});
+    const password = generatePassword(5, {capitals, lowercase, symbols, numbers, more_symbols});
     expect(password.length).toEqual(5);
     expect(/[A-Z]/.test(password)).toBeTruthy();
     expect(/[a-z]/.test(password)).toBeTruthy();
