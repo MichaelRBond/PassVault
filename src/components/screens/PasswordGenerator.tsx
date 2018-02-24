@@ -1,5 +1,5 @@
 import * as React from "react";
-import generatePassword from "../../utils/crypto";
+import {generatePassword} from "../../utils/crypto";
 import Checkbox from "../elements/Checkbox";
 import RoundButton from "../elements/RoundButton";
 import TextInput from "../elements/TextInput";
