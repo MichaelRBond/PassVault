@@ -2,6 +2,7 @@ import * as promise from "es6-promise";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import PassVault from "./components/PassVault";
+import { PassVaultModel } from "./models/passvault";
 import {HttpClient} from "./utils/http";
 import Vault from "./vault/index";
 
@@ -13,10 +14,12 @@ promise.polyfill();
 
 const httpClient = new HttpClient();
 const vaultClient = new Vault(httpClient);
+const passvault = new PassVaultModel(vaultClient);
 
 ReactDOM.render(
   (
     <PassVault
+      passvault={passvault}
       vault={vaultClient}
     />
   ),

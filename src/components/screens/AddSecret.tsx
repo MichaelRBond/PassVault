@@ -1,8 +1,8 @@
 import * as QueryString from "query-string";
 import * as React from "react";
+import {PassVaultModel, Secret} from "../../models/passvault";
 import {isBlank} from "../../utils/helpers";
 import { Logger } from "../../utils/logger";
-import Vault, {Password} from "../../vault";
 import CancelButton from "../elements/CancelButton";
 import ConfirmButton from "../elements/ConfirmButton";
 import TextArea from "../elements/TextArea";
@@ -15,7 +15,7 @@ declare var window: any;
 const logger = new Logger("AddSecret");
 
 interface ComponentProps {
-  vault: Vault;
+  passvault: PassVaultModel;
 }
 
 interface ComponentState {
@@ -36,7 +36,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
   constructor(props: ComponentProps) {
     super(props);
 
-    if (!props.vault) {
+    if (!props.passvault) {
       window.location = "/#/start";
     }
 
@@ -71,7 +71,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       return;
     }
 
-    const password = await this.props.vault.getPassword(`${folder}/${secret}`);
+    const password = await this.props.passvault.getPassword(`${folder}/${secret}`);
     // TODO : check to make sure that we a password back
     this.setState({
       ...this.state,
@@ -254,14 +254,14 @@ export default class AddSecret extends React.Component<ComponentProps, Component
 
   private async saveSecret(): Promise<void> {
     logger.info("saving secret to vault ...");
-    const secret: Password = {
+    const secret: Secret = {
       name: this.state.name,
       url: this.state.website,
       username: this.state.username,
       password: this.state.password,
       notes: this.state.notes,
     };
-    await this.props.vault.savePassword(secret, this.state.folder);
+    await this.props.passvault.savePassword(secret, this.state.folder);
     window.location = "#/main";
     return;
   }
@@ -329,7 +329,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     if (this.state.modified) {
       return;
     }
-    await this.props.vault.deletePassword(this.state.name, this.state.folder);
+    await this.props.passvault.deletePassword(this.state.name, this.state.folder);
     window.location = "#/main";
     return;
   }

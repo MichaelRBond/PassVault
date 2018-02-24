@@ -1,12 +1,12 @@
 import * as React from "react";
+import {PassVaultModel} from "../../models/passvault";
 import { buildUrlFromStr, getPrettyUrl } from "../../utils/helpers";
-import Vault from "../../vault";
 import PassVaultIcon from "../elements/PassVaultIcon";
 
 interface ComponentProps {
   folder: string;
   secret: string;
-  vault: Vault;
+  passvault: PassVaultModel;
 }
 
 export default class PassVaultSecret extends React.Component<ComponentProps, {}> {
@@ -33,19 +33,19 @@ export default class PassVaultSecret extends React.Component<ComponentProps, {}>
           type="user"
           folder={this.props.folder}
           secret={this.props.secret}
-          vault={this.props.vault}
+          passvault={this.props.passvault}
         />
         <PassVaultIcon
           type="password"
           folder={this.props.folder}
           secret={this.props.secret}
-          vault={this.props.vault}
+          passvault={this.props.passvault}
         />
         <PassVaultIcon
           type="edit"
           folder={this.props.folder}
           secret={this.props.secret}
-          vault={this.props.vault}
+          passvault={this.props.passvault}
         />
       </div>
     );

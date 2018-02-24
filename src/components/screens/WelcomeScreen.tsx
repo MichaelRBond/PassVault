@@ -1,4 +1,5 @@
 import * as React from "react";
+import {PassVaultModel} from "../../models/passvault";
 import Vault from "../../vault";
 import ConfirmButton from "../elements/ConfirmButton";
 import RoundButton from "../elements/RoundButton";
@@ -8,6 +9,7 @@ const logo = require("./passvaultlogo.png");
 
 interface ComponentProps {
   handleConfirm: any;
+  passvault: PassVaultModel;
   vault: Vault;
 }
 

@@ -1,6 +1,7 @@
 import { createHashHistory, History } from "history";
 import * as React from "react";
 import { Route, Router, Switch } from "react-router";
+import {PassVaultModel} from "../models/passvault";
 import Vault from "../vault";
 import Chrome from "./Chrome";
 import AddSecret from "./screens/AddSecret";
@@ -10,6 +11,7 @@ import PasswordGenerator from "./screens/PasswordGenerator";
 import WelcomeScreen from "./screens/WelcomeScreen";
 
 interface ComponentProps {
+  passvault: PassVaultModel;
   vault: Vault;
 }
 
@@ -28,13 +30,13 @@ export default class PassVault extends React.Component<ComponentProps, Component
 
     const vaultUrl = window.localStorage.getItem("__passvault_vault_url");
     if (vaultUrl) {
-      this.props.vault.setUrl(vaultUrl);
+      this.props.passvault.setUrl(vaultUrl);
     }
 
     const vaultToken = window.localStorage.getItem("__passvault_vault_token");
     if (vaultToken) {
-      this.props.vault.setUsername(window.localStorage.getItem("__passvault_vault_username"));
-      this.props.vault.setToken(vaultToken);
+      this.props.passvault.setUsername(window.localStorage.getItem("__passvault_vault_username"));
+      this.props.passvault.setToken(vaultToken);
     }
 
     if (vaultUrl) {
@@ -49,7 +51,7 @@ export default class PassVault extends React.Component<ComponentProps, Component
   }
 
   public handleSaveUrl(url: string) {
-    this.props.vault.setUrl(url);
+    this.props.passvault.setUrl(url);
     window.location = "#/login";
   }
 
@@ -59,19 +61,22 @@ export default class PassVault extends React.Component<ComponentProps, Component
         <Chrome>
           <Switch>
             <Route path="/start">
-              <WelcomeScreen vault={this.props.vault} handleConfirm={this.handleSaveUrl.bind(this)} />
+              <WelcomeScreen
+                passvault={this.props.passvault}
+                vault={this.props.vault}
+                handleConfirm={this.handleSaveUrl.bind(this)} />
             </Route>
             <Route path="/login">
-              <LoginScreen vaultClient={this.props.vault}/>
+              <LoginScreen passvault={this.props.passvault}/>
             </Route>
             <Route path="/main">
-              <MainScreen vault={this.props.vault} />
+              <MainScreen passvault={this.props.passvault} />
             </Route>
             <Route path="/passwordGenerator">
               <PasswordGenerator />
             </Route>
             <Route path="/saveSecret">
-              <AddSecret vault={this.props.vault} />
+              <AddSecret passvault={this.props.passvault} />
             </Route>
           </Switch>
         </Chrome>

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { PassVaultEvent } from "../../models/PassVaultEvent";
-import Vault from "../../vault";
+import {PassVaultModel} from "../../models/passvault";
+import { PassVaultEvent } from "../../models/passvault-event";
 import ConfirmButton from "../elements/ConfirmButton";
 import MenuList from "../elements/MenuList";
 import PassVaultSecret from "../elements/PassVaultSecret";
@@ -15,7 +15,7 @@ interface SearchResults {
 interface ComponentProps {
   handleTestConnection?: any;
   handleConfirm?: any;
-  vault: Vault;
+  passvault: PassVaultModel;
 }
 
 interface ComponentState {
@@ -71,7 +71,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
 
   public async search(e: PassVaultEvent) {
     if (!e || !e.target) {
-      return;  // NOT SURE HOW TO FIX LINT HERE
+      return;
     }
 
     const query = e.target.value;
@@ -83,12 +83,10 @@ export default class extends React.Component<ComponentProps, ComponentState> {
       });
     }
 
-    const vault = this.props.vault;
+    const folders = await this.props.passvault.getFolders();
 
-    const folders = await vault.getFolders();
-
-    const listPromises = folders.map((f) => {
-      return vault.list(`passwords/${f}`);
+    const listPromises = folders.map((folder) => {
+      return this.props.passvault.getSecretNamesFromFolder(folder);
     });
 
     const listResponses = await Promise.all(listPromises);
@@ -127,7 +125,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
           return <PassVaultSecret
             folder={results.folder}
             secret={results.key}
-            vault={this.props.vault}
+            passvault={this.props.passvault}
           />;
         })}
         </div>
@@ -183,14 +181,14 @@ export default class extends React.Component<ComponentProps, ComponentState> {
 
   // TODO : Type return better
   private async getFavorites(): Promise<any> {
-    const favorites = await this.props.vault.getFavorites();
+    const favorites = await this.props.passvault.getFavorites();
     return favorites.map((fav) => {
       const [folder, secret] = fav.split("%%%");
       return (
         <PassVaultSecret
           folder={folder}
           secret={secret}
-          vault={this.props.vault}
+          passvault={this.props.passvault}
         />
         );
       });
@@ -198,20 +196,20 @@ export default class extends React.Component<ComponentProps, ComponentState> {
 
   // TODO : Type return better
   private async getFolders(): Promise<any> {
-    const folders = await this.props.vault.getFolders();
-    const folderPromises = folders.map(async (f) => {
-      const websites = await this.props.vault.list(`${Vault.FOLDERS}/${f}`);
+    const folders = await this.props.passvault.getFolders();
+    const folderPromises = folders.map(async (folder) => {
+      const secrets = await this.props.passvault.getSecretNamesFromFolder(folder);
       return (
           <li>
-            <div className="collapsible-header"><i className="material-icons prefix">folder</i>{f}</div>
-            <div className="collapsible-body" key={f}>
+            <div className="collapsible-header"><i className="material-icons prefix">folder</i>{folder}</div>
+            <div className="collapsible-body" key={folder}>
               {
-                websites.map((w) => {
+                secrets.map((secret) => {
                   return (
                     <PassVaultSecret
-                    folder={f}
-                    secret={w}
-                    vault={this.props.vault}
+                    folder={folder}
+                    secret={secret}
+                    passvault={this.props.passvault}
                   />
                   );
                 })

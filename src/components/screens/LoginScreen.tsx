@@ -1,5 +1,5 @@
 import * as React from "react";
-import Vault from "../../vault";
+import {PassVaultModel} from "../../models/passvault";
 import Checkbox from "../elements/Checkbox";
 import ConfirmButton from "../elements/ConfirmButton";
 import SelectBox from "../elements/SelectBox";
@@ -8,7 +8,7 @@ import TextInput from "../elements/TextInput";
 const logo = require("./passvaultlogo.png");
 
 interface ComponentProps {
-  vaultClient: Vault;
+  passvault: PassVaultModel;
 }
 
 interface ComponentState {
@@ -23,7 +23,7 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
   constructor(props: ComponentProps) {
     super(props);
 
-    if (!props.vaultClient) {
+    if (!props.passvault) {
       window.location = "/#/start";
     }
 
@@ -59,9 +59,9 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
 
   public async tryLogin(): Promise<void> {
     try {
-      await this.props.vaultClient.login(this.state.username, this.state.password);
+      await this.props.passvault.login(this.state.username, this.state.password);
       if (this.state.rememberLogin) {
-        window.localStorage.setItem("__passvault_vault_token", this.props.vaultClient.getToken());
+        window.localStorage.setItem("__passvault_vault_token", this.props.passvault.getToken());
         window.localStorage.setItem("__passvault_vault_username", this.state.username);
       }
 

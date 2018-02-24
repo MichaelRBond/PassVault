@@ -1,6 +1,6 @@
 import * as React from "react";
+import {PassVaultModel, Secret} from "../../models/passvault";
 import { Logger } from "../../utils/logger";
-import Vault, { Password } from "../../vault";
 
 declare var document: any;
 declare var window: any;
@@ -11,7 +11,7 @@ interface ComponentProps {
   type: string;
   folder: string;
   secret: string;
-  vault: Vault;
+  passvault: PassVaultModel;
 }
 
 interface ComponentState {
@@ -38,12 +38,12 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
   }
 
   private async clickIcon(): Promise<void> {
-    const result = await this.props.vault.getPassword(`${this.props.folder}${this.props.secret}`);
+    const result = await this.props.passvault.getPassword(`${this.props.folder}${this.props.secret}`);
     this.handleClick(result);
     return;
   }
 
-  private handleClick(result: Password): void {
+  private handleClick(result: Secret): void {
     switch (this.props.type) {
       case "password":
         return this.copyStringToClipboard(result.password);
