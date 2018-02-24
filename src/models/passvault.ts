@@ -11,6 +11,14 @@ export interface Secret {
   notes?: string;
 }
 
+export interface PassVaultPreferences {
+  favorites: string;
+}
+
+export interface PassVaultTotp {
+  code: string;
+}
+
 export class PassVaultModel {
 
   public static PREFERENCES_SECRET = "preferences";
@@ -36,8 +44,8 @@ export class PassVaultModel {
   }
 
   public async getFavorites(): Promise<string[]> {
-    const result = await this.vault.read(`${this.getBaseUrl()}/${PassVaultModel.PREFERENCES_SECRET}`, this.token);
-    return result.data.data.favorites.split(/,/);
+    const preferences = await this.getPreferences();
+    return preferences.favorites.split(/,/);
   }
 
   public async getFolders(): Promise<string[]> {
@@ -51,12 +59,10 @@ export class PassVaultModel {
 
   // TODO : SHould return an optional
   public async getPassword(secretPath: string): Promise<Secret> {
-    // TODO : attempt to read from cache. if it is in the cache, return. Otherwise
-    // call vault
     const url = `${this.getBaseUrl()}/${PassVaultModel.FOLDERS}/${secretPath}`;
-    const response = await this.vault.read(url, this.token);
+    const secret = await this.vault.read<Secret>(url, this.token);
     // TODO : if we get null/optional absent back from this.read() return an empty optional
-    return response.data.data;
+    return secret;
   }
 
   // TODO : don't return axios response
@@ -85,8 +91,9 @@ export class PassVaultModel {
   }
 
   public async getTotpCode(website: string): Promise<string> {
-      const response = await this.vault.read(`${this.getBaseUrl()}/${this.username}-totp/code/${website}`, this.token);
-      return response.data.data.code;
+    const url = `${this.getBaseUrl()}/${this.username}-totp/code/${website}`;
+    const totp = await this.vault.read<PassVaultTotp>(url, this.token);
+    return totp.code;
   }
 
   public setUsername(username: string) {
@@ -109,5 +116,10 @@ export class PassVaultModel {
 
   private getBaseUrl(): string {
     return `${this.url}/v1/passvault/${this.username}`;
+  }
+
+  private getPreferences(): Promise<PassVaultPreferences> {
+    const url = `${this.getBaseUrl()}/${PassVaultModel.PREFERENCES_SECRET}`;
+    return this.vault.read<PassVaultPreferences>(url, this.token);
   }
 }
