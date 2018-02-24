@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { isNullOrUndefined } from "util";
 import { isBlank } from "../utils/helpers";
+import { buildFavoritesPath } from "../utils/passvault";
 import Vault from "../vault";
 
 export interface Secret {
@@ -46,6 +47,21 @@ export class PassVaultModel {
   public async getFavorites(): Promise<string[]> {
     const preferences = await this.getPreferences();
     return preferences.favorites.split(/,/);
+  }
+
+  public async saveFavorites(favorites: string): Promise<void> {
+    const preferences = await this.getPreferences();
+    const updatedPreferences: PassVaultPreferences = {
+      ...preferences,
+      favorites,
+    };
+    return this.savePreferences(updatedPreferences);
+  }
+
+  public async secretIsFavorite(folder: string, secret: string): Promise<boolean> {
+    const favorites = await this.getFavorites();
+    const favoriteStr = buildFavoritesPath(folder, secret);
+    return favorites.indexOf(favoriteStr) === -1 ? false : true;
   }
 
   public async getFolders(): Promise<string[]> {
@@ -121,5 +137,11 @@ export class PassVaultModel {
   private getPreferences(): Promise<PassVaultPreferences> {
     const url = `${this.getBaseUrl()}/${PassVaultModel.PREFERENCES_SECRET}`;
     return this.vault.read<PassVaultPreferences>(url, this.token);
+  }
+
+  private async savePreferences(preferences: PassVaultPreferences): Promise<void> {
+    const url = `${this.getBaseUrl()}/${PassVaultModel.PREFERENCES_SECRET}`;
+    await this.vault.write(url, preferences, this.token);
+    return;
   }
 }

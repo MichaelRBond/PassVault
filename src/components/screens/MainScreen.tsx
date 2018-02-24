@@ -1,6 +1,7 @@
 import * as React from "react";
 import {PassVaultModel} from "../../models/passvault";
 import { PassVaultEvent } from "../../models/passvault-event";
+import {favoritesDelimiter} from "../../utils/passvault";
 import ConfirmButton from "../elements/ConfirmButton";
 import MenuList from "../elements/MenuList";
 import PassVaultSecret from "../elements/PassVaultSecret";
@@ -183,7 +184,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
   private async getFavorites(): Promise<any> {
     const favorites = await this.props.passvault.getFavorites();
     return favorites.map((fav) => {
-      const [folder, secret] = fav.split("%%%");
+      const [folder, secret] = fav.split(favoritesDelimiter);
       return (
         <PassVaultSecret
           folder={folder}

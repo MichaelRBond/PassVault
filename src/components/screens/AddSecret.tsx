@@ -3,6 +3,7 @@ import * as React from "react";
 import {PassVaultModel, Secret} from "../../models/passvault";
 import {isBlank} from "../../utils/helpers";
 import { Logger } from "../../utils/logger";
+import { buildFavoritesPath } from "../../utils/passvault";
 import CancelButton from "../elements/CancelButton";
 import ConfirmButton from "../elements/ConfirmButton";
 import TextArea from "../elements/TextArea";
@@ -25,6 +26,7 @@ interface ComponentState {
   password: string;
   folder: string;
   notes: string;
+  favorite: boolean;
   togglePassword: string;
   editor: boolean;
   modified: boolean;
@@ -47,6 +49,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       password: "",
       folder: "",
       notes: "",
+      favorite: false,
       togglePassword: "password",
       editor: false,
       modified: false,
@@ -61,6 +64,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     this.updateWebsite = this.updateWebsite.bind(this);
     this.togglePassword = this.togglePassword.bind(this);
     this.deleteSecret = this.deleteSecret.bind(this);
+    this.favoriteSecret = this.favoriteSecret.bind(this);
   }
 
   public async componentDidMount() {
@@ -71,7 +75,10 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       return;
     }
 
-    const password = await this.props.passvault.getPassword(`${folder}/${secret}`);
+    const [password, favorite] = await Promise.all([
+      this.props.passvault.getPassword(`${folder}/${secret}`),
+      this.props.passvault.secretIsFavorite(folder, secret),
+    ]);
     // TODO : check to make sure that we a password back
     this.setState({
       ...this.state,
@@ -81,6 +88,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       password: password.password,
       folder,
       notes: password.notes,
+      favorite,
       editor: true,
     });
 
@@ -116,9 +124,9 @@ export default class AddSecret extends React.Component<ComponentProps, Component
         <div className="col s1 left-align">
           <h5>
             <Hidden when={!this.state.editor}>
-              <a href="test.com" className="grey-text text-darken-1">
-                <i className="material-icons prefix">favorite_border</i>
-              </a>
+              <i className="material-icons prefix" onClick={this.favoriteSecret}>
+                {this.state.favorite ? "favorite" : "favorite_border"}
+              </i>
             </Hidden>
           </h5>
         </div>
@@ -331,6 +339,40 @@ export default class AddSecret extends React.Component<ComponentProps, Component
     }
     await this.props.passvault.deletePassword(this.state.name, this.state.folder);
     window.location = "#/main";
+    return;
+  }
+
+  private async favoriteSecret(): Promise<void> {
+    if (this.state.modified) {
+      return;
+    }
+    const favorites = await this.props.passvault.getFavorites();
+    return this.state.favorite ? this.removeFavorite(favorites) : this.addFavorite(favorites);
+  }
+
+  private async removeFavorite(favorites: string[]): Promise<void> {
+    this.setState({
+      ...this.state,
+      favorite: false,
+    });
+
+    const index = favorites.indexOf(buildFavoritesPath(this.state.folder, this.state.name));
+    if (index !== -1) {
+      favorites.splice(index, 1);
+    }
+    await this.props.passvault.saveFavorites(favorites.join(","));
+    return;
+  }
+
+  private async addFavorite(favorites: string[]): Promise<void> {
+    this.setState({
+      ...this.state,
+      favorite: true,
+    });
+
+    const newFavorite = buildFavoritesPath(this.state.folder, this.state.name);
+    favorites.push(newFavorite);
+    await this.props.passvault.saveFavorites(favorites.join(","));
     return;
   }
 }
