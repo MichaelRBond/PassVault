@@ -254,6 +254,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           <ConfirmButton
             text="Save"
             onclickHandler={this.saveSecret}
+            disable={!this.state.modified}
           />
         </div>
 

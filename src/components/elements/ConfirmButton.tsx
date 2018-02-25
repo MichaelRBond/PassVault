@@ -5,6 +5,7 @@ interface ComponentProps {
   text: string;
   onclickHandler: any; // TODO : Type better
   type?: string;
+  disable?: boolean;
 }
 
 export default class ConfirmButtonLarge extends React.Component<ComponentProps, {}> {
@@ -15,9 +16,10 @@ export default class ConfirmButtonLarge extends React.Component<ComponentProps, 
 
   public render() {
     const buttonType = isNullOrUndefined(this.props.type) ? "" : this.props.type;
+    const disabled = this.props.disable ? "disabled" : "";
     const display = (
       <a
-        className={`waves-effect waves-light btn ${buttonType}`}
+        className={`waves-effect waves-light btn ${buttonType} ${disabled}`}
         onClick={this.props.onclickHandler}
         >
         {this.props.text}
