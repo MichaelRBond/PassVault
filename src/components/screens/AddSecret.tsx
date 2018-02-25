@@ -118,6 +118,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
               colSize={12}
               onChangeHandler={this.updateName}
               value={this.state.name}
+              tabIndex={1}
             />
           </h5>
         </div>
@@ -141,6 +142,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           colSize={10}
           onChangeHandler={this.updateWebsite}
           value={this.state.website}
+          tabIndex={2}
         />
         <div className="col s1 left-align">
           <h5>
@@ -160,6 +162,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           colSize={10}
           onChangeHandler={this.updateUsername}
           value={this.state.username}
+          tabIndex={3}
         />
         <div className="col s1 left-align">
           <h5>
@@ -180,6 +183,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           colSize={9}
           onChangeHandler={this.updatePassword}
           value={this.state.password}
+          tabIndex={4}
         />
         <div className="col s1 left-align">
           <h5>
@@ -204,6 +208,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
           colSize={10}
           onChangeHandler={this.updateFolder}
           value={this.state.folder}
+          tabIndex={5}
         />
         {/* TODO : This should be a select box instead of the free text field above */}
         {/* <select>

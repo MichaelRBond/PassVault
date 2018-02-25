@@ -8,6 +8,7 @@ interface ComponentProps {
   validate?: boolean;
   type?: string;
   value?: any;
+  tabIndex?: number;
 }
 
 export default class InputText extends React.Component<ComponentProps, {}> {
@@ -28,6 +29,7 @@ export default class InputText extends React.Component<ComponentProps, {}> {
         className={className}
         onChange={this.props.onChangeHandler}
         value={this.props.value}
+        tabIndex={this.props.tabIndex}
       />
     );
     return display;

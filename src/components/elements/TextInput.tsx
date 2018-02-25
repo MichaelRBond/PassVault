@@ -15,6 +15,7 @@ interface ComponentProps {
   active?: boolean;
   value?: any;
   inline?: boolean;
+  tabIndex?: number;
 }
 
 export default class TextInput extends React.Component<ComponentProps, {}> {
@@ -38,6 +39,7 @@ export default class TextInput extends React.Component<ComponentProps, {}> {
           onChangeHandler={this.props.onChangeHandler}
           type={this.props.type}
           value={this.props.value}
+          tabIndex={this.props.tabIndex}
         />
         {this.props.label && (
           <label htmlFor={this.props.id} className={`${active}`}>{this.props.label}</label>
