@@ -1,4 +1,5 @@
 import * as React from "react";
+import {Config} from "../config";
 
 import "./Chrome.scss";
 
@@ -10,7 +11,7 @@ export default class extends React.Component {
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="right">
             <li className="settings">
-              <a href="#/settings">
+              <a href={Config.PAGE_SETTINGS}>
                 <i className="large material-icons black-text">settings</i>
               </a>
             </li>

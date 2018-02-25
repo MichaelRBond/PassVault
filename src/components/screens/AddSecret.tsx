@@ -1,6 +1,9 @@
 import * as QueryString from "query-string";
 import * as React from "react";
+import {Config} from "../../config";
 import {PassVaultModel, Secret} from "../../models/passvault";
+import {changeWindowLocation, copyToClipboardFromId, getLocationHash, openInputTextInNewTab} from "../../utils/browser";
+import {getElementById} from "../../utils/browser";
 import {isBlank} from "../../utils/helpers";
 import { Logger } from "../../utils/logger";
 import { buildFavoritesPath } from "../../utils/passvault";
@@ -9,9 +12,6 @@ import ConfirmButton from "../elements/ConfirmButton";
 import TextArea from "../elements/TextArea";
 import TextInput from "../elements/TextInput";
 import Hidden from "../Hidden";
-
-declare var document: any;
-declare var window: any;
 
 const logger = new Logger("AddSecret");
 
@@ -32,14 +32,12 @@ interface ComponentState {
   modified: boolean;
 }
 
-declare var window: any;
-
 export default class AddSecret extends React.Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
     super(props);
 
     if (!props.passvault) {
-      window.location = "/#/start";
+      changeWindowLocation(Config.PAGE_START);
     }
 
     this.state = {
@@ -68,8 +66,9 @@ export default class AddSecret extends React.Component<ComponentProps, Component
   }
 
   public async componentDidMount() {
-    const secret = QueryString.parse(window.location.hash).secret;
-    const folder = QueryString.parse(window.location.hash).folder;
+    const locationHash = getLocationHash();
+    const secret = QueryString.parse(locationHash).secret;
+    const folder = QueryString.parse(locationHash).folder;
 
     if (isBlank(secret) || isBlank(folder)) {
       return;
@@ -146,9 +145,9 @@ export default class AddSecret extends React.Component<ComponentProps, Component
         />
         <div className="col s1 left-align">
           <h5>
-            <a href="test.com" className="grey-text text-darken-1">
-              <i className="material-icons small">open_in_new</i>
-            </a>
+            <i className="material-icons small" onClick={() => {
+              openInputTextInNewTab("website");
+            }}>open_in_new</i>
           </h5>
         </div>
       </div>
@@ -166,9 +165,9 @@ export default class AddSecret extends React.Component<ComponentProps, Component
         />
         <div className="col s1 left-align">
           <h5>
-            <a href="test.com" className="grey-text text-darken-1">
-              <i className="material-icons small">content_copy</i>
-            </a>
+              <i className="material-icons small" onClick={() => {
+                copyToClipboardFromId("username");
+              }}>content_copy</i>
           </h5>
         </div>
       </div>
@@ -192,9 +191,9 @@ export default class AddSecret extends React.Component<ComponentProps, Component
         </div>
         <div className="col s1 left-align">
           <h5>
-            <a href="test.com" className="grey-text text-darken-1">
-              <i className="material-icons small">content_copy</i>
-            </a>
+            <i className="material-icons small" onClick={() => {
+                copyToClipboardFromId("password");
+              }}>content_copy</i>
           </h5>
         </div>
       </div>
@@ -248,7 +247,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
         <div className="col s5">
           {/* TODO: What do we do on a cancel event */}
           <CancelButton
-            onclickHandler={() => {window.location = "#/main"; }}
+            onclickHandler={() => {changeWindowLocation(Config.PAGE_MAIN); }}
           />
         </div>
         <div className="col s5">
@@ -275,7 +274,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       notes: this.state.notes,
     };
     await this.props.passvault.savePassword(secret, this.state.folder);
-    window.location = "#/main";
+    changeWindowLocation(Config.PAGE_MAIN);
     return;
   }
 
@@ -334,7 +333,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       ...this.state,
       togglePassword,
     });
-    const passwordInput = document.getElementById("password");
+    const passwordInput = getElementById("password");
     passwordInput.type = togglePassword;
   }
 
@@ -343,7 +342,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       return;
     }
     await this.props.passvault.deletePassword(this.state.name, this.state.folder);
-    window.location = "#/main";
+    changeWindowLocation(Config.PAGE_MAIN);
     return;
   }
 

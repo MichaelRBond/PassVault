@@ -1,5 +1,7 @@
 import * as React from "react";
+import {Config} from "../../config";
 import {PassVaultModel} from "../../models/passvault";
+import {alert, changeWindowLocation, localStorageSetItem} from "../../utils/browser";
 import Checkbox from "../elements/Checkbox";
 import ConfirmButton from "../elements/ConfirmButton";
 import SelectBox from "../elements/SelectBox";
@@ -17,14 +19,12 @@ interface ComponentState {
   rememberLogin: boolean;
 }
 
-declare var window: any;
-
 export default class LoginScreen extends React.Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
     super(props);
 
     if (!props.passvault) {
-      window.location = "/#/start";
+      changeWindowLocation(Config.PAGE_START);
     }
 
     this.state = {
@@ -61,13 +61,13 @@ export default class LoginScreen extends React.Component<ComponentProps, Compone
     try {
       await this.props.passvault.login(this.state.username, this.state.password);
       if (this.state.rememberLogin) {
-        window.localStorage.setItem("__passvault_vault_token", this.props.passvault.getToken());
-        window.localStorage.setItem("__passvault_vault_username", this.state.username);
+        localStorageSetItem("__passvault_vault_token", this.props.passvault.getToken());
+        localStorageSetItem("__passvault_vault_username", this.state.username);
       }
 
-      window.location = "#/main";
+      changeWindowLocation(Config.PAGE_MAIN);
     } catch {
-      window.alert("login invalid");
+      alert("login invalid");
     }
     return;
   }

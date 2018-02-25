@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as uuidv1 from "uuid/v1";
-
-declare var document: any;
+import {getElementById} from "../../utils/browser";
 
 interface ComponentProps {
   id?: string;
@@ -44,15 +43,11 @@ export default class Checkbox extends React.Component<ComponentProps, ComponentS
   }
 
   private handleChange(id: string): any {
-    const checkbox = this.getCheckbox();
+    const checkbox = getElementById(this.state.id);
     this.setState({
       ...this.state,
       checked: checkbox.checked,
     });
     return this.props.onChangeHandler(!this.state.checked);
-  }
-
-  private getCheckbox(): any {
-    return document.getElementById(this.state.id);
   }
 }

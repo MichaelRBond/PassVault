@@ -1,9 +1,8 @@
 import * as React from "react";
+import {Config} from "../../config";
 import {PassVaultModel, Secret} from "../../models/passvault";
+import {changeWindowLocation, copyStringToClipboard} from "../../utils/browser";
 import { Logger } from "../../utils/logger";
-
-declare var document: any;
-declare var window: any;
 
 const logger = new Logger("PassVaultIcon");
 
@@ -46,15 +45,15 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
   private handleClick(result: Secret): void {
     switch (this.props.type) {
       case "password":
-        return this.copyStringToClipboard(result.password);
+        return copyStringToClipboard(result.password);
       case "user":
-        return this.copyStringToClipboard(result.username);
+        return copyStringToClipboard(result.username);
       case "edit":
         let folder = this.props.folder;
         if (/\/$/.test(folder)) {
           folder = folder.substring(0, folder.length - 1);
         }
-        window.location = `#/saveSecret?&folder=${folder}&secret=${this.props.secret}`;
+        changeWindowLocation(`${Config.PAGE_SECRET}?&folder=${folder}&secret=${this.props.secret}`);
         break;
       default:
         logger.error("Invalid event type");
@@ -73,20 +72,6 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
       default:
         return "broken_image";
     }
-  }
-
-  // Stolen from :
-  // https://stackoverflow.com/questions/127040/copy-put-text-on-the-clipboard-with-firefox-safari-and-chrome
-  private copyStringToClipboard(str: string): void {
-    const handler = (event: any) => {
-        event.clipboardData.setData("text/plain", str);
-        event.preventDefault();
-        document.removeEventListener("copy", handler, true);
-    };
-
-    document.addEventListener("copy", handler, true);
-    document.execCommand("copy");
-    return;
   }
 
 }

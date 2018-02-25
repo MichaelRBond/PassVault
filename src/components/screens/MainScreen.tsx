@@ -1,6 +1,8 @@
 import * as React from "react";
+import {Config} from "../../config";
 import {PassVaultModel} from "../../models/passvault";
 import { PassVaultEvent } from "../../models/passvault-event";
+import {changeWindowLocation} from "../../utils/browser";
 import {favoritesDelimiter} from "../../utils/passvault";
 import ConfirmButton from "../elements/ConfirmButton";
 import MenuList from "../elements/MenuList";
@@ -25,8 +27,6 @@ interface ComponentState {
   folders: any;
   searchResults: SearchResults[];
 }
-
-declare var window: any;
 
 export default class extends React.Component<ComponentProps, ComponentState> {
 
@@ -153,13 +153,13 @@ export default class extends React.Component<ComponentProps, ComponentState> {
               title: "Passwords Generator",
               icon: "lock",
               content: "rab",
-              url: "#/passwordGenerator",
+              url: Config.PAGE_PASSWORD_GENERATOR,
             },
           ]}/>
           <div className="col center-align pad-top-50">
               <ConfirmButton
                 text="Add Password"
-                onclickHandler={() => window.location = "#/saveSecret"}
+                onclickHandler={() => changeWindowLocation(Config.PAGE_SECRET)}
                 type=""
               />
           </div>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import {PassVaultModel} from "../../models/passvault";
+import {localStorageSetItem} from "../../utils/browser";
 import Vault from "../../vault";
 import ConfirmButton from "../elements/ConfirmButton";
 import RoundButton from "../elements/RoundButton";
@@ -16,8 +17,6 @@ interface ComponentProps {
 interface ComponentState {
   url: string;
 }
-
-declare var window: any;
 
 export default class WelcomeScreen extends React.Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
@@ -86,7 +85,7 @@ export default class WelcomeScreen extends React.Component<ComponentProps, Compo
   private async handleConfirm(e: Event) {
     const success = await this.handleTestConnection();
     if (success) {
-      window.localStorage.setItem("__passvault_vault_url", this.state.url);
+      localStorageSetItem("__passvault_vault_url", this.state.url);
       await this.props.handleConfirm(this.state.url);
     }
     return;
