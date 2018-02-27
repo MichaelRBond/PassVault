@@ -34,18 +34,21 @@ export default class PassVaultSecret extends React.Component<ComponentProps, {}>
           folder={this.props.folder}
           secret={this.props.secret}
           passvault={this.props.passvault}
+          title="Copy Username"
         />
         <PassVaultIcon
           type="password"
           folder={this.props.folder}
           secret={this.props.secret}
           passvault={this.props.passvault}
+          title="Copy Password"
         />
         <PassVaultIcon
           type="edit"
           folder={this.props.folder}
           secret={this.props.secret}
           passvault={this.props.passvault}
+          title="Edit Password Entry"
         />
       </div>
     );

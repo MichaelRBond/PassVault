@@ -11,6 +11,7 @@ interface ComponentProps {
   folder: string;
   secret: string;
   passvault: PassVaultModel;
+  title?: string;
 }
 
 interface ComponentState {
@@ -18,6 +19,13 @@ interface ComponentState {
 }
 
 export default class PassVaultIcon extends React.Component<ComponentProps, ComponentState> {
+  public static defaultProps: ComponentProps = {
+    type: "",
+    folder: "",
+    secret: "",
+    passvault: undefined,
+    title: "",
+  };
   constructor(props: ComponentProps) {
     super(props);
     this.state = {
@@ -32,7 +40,7 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
     return (
       <div className="col s1 left-align min-40">
         <a className="btn-floating waves-effect waves-light btn-small">
-          <i className="material-icons" onClick={this.clickIcon}>{this.state.icon}</i>
+          <i className="material-icons" title={this.props.title} onClick={this.clickIcon}>{this.state.icon}</i>
         </a>
       </div>
     );
