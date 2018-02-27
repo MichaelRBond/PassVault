@@ -27,6 +27,7 @@
     "deprecation": true,
     "eofline": true,
     "no-unnecessary-callback-wrapper": true,
+    "max-line-length": false,
     "member-ordering": {
       "options": {
         "order": [
