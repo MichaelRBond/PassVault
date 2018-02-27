@@ -30,8 +30,10 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
 
   public render() {
     return (
-      <div className="col s1 center-align">
-        <i className="material-icons grey-text" onClick={this.clickIcon}>{this.state.icon}</i>
+      <div className="col s1 left-align min-40">
+        <a className="btn-floating waves-effect waves-light btn-small">
+          <i className="material-icons" onClick={this.clickIcon}>{this.state.icon}</i>
+        </a>
       </div>
     );
   }

@@ -52,3 +52,26 @@
 .hidden {
   display: none;
 }
+
+.collapsible-body {
+  padding: 0px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.min-40 {
+  min-width: 30px;
+}
+
+.btn-small i{
+  height: 25px;
+  line-height: 25px;
+  font-size: 1rem;
+}
+
+.btn-floating.btn-small {
+  height: 25px;
+  line-height: 25px;
+  width: 25px;
+}
