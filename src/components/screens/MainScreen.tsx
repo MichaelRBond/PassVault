@@ -202,7 +202,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
       const secrets = await this.props.passvault.getSecretNamesFromFolder(folder);
       return (
           <li>
-            <div className="collapsible-header"><i className="material-icons prefix">folder</i>{folder}</div>
+            <div className="collapsible-header"><i className="material-icons prefix teal-text">folder</i>{folder}</div>
             <div className="collapsible-body" key={folder}>
               {
                 secrets.map((secret) => {
