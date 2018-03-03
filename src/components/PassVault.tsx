@@ -57,25 +57,25 @@ export default class PassVault extends React.Component<ComponentProps, Component
 
   public render() {
     const display = (
-      <Router history={this.state.history}>
-        <Chrome>
-          <Switch>
-            <Route path="/start">
+      <Router history={this.state.history} key="router">
+        <Chrome key="chrome">
+          <Switch key="switch">
+            <Route path="/start" key="start">
               <WelcomeScreen
                 passvault={this.props.passvault}
                 vault={this.props.vault}
                 handleConfirm={this.handleSaveUrl.bind(this)} />
             </Route>
-            <Route path="/login">
+            <Route path="/login" key="login">
               <LoginScreen passvault={this.props.passvault}/>
             </Route>
-            <Route path="/main">
+            <Route path="/main" key="main">
               <MainScreen passvault={this.props.passvault} />
             </Route>
-            <Route path="/passwordGenerator">
+            <Route path="/passwordGenerator" key="passwordGenerator">
               <PasswordGenerator />
             </Route>
-            <Route path="/saveSecret">
+            <Route path="/saveSecret" key="saveSecret">
               <AddSecret passvault={this.props.passvault} />
             </Route>
           </Switch>

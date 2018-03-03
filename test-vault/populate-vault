@@ -19,5 +19,5 @@ vault write auth/userpass/users/test password=test policies=test
 
 #Test Data
 vault write passvault/test/preferences favorites=default/%%%google.com,code/%%%gitlab.com
-vault write passvault/test/passwords/default/google.com username=bob@gmail.com password=foo notes="test note" url="google.com/login" name="Google"
-vault write passvault/test/passwords/code/gitlab.com username=test password=foo url=gitlab.com name="Gitlab"
+vault write passvault/test/passwords/default/google.com username=bob@gmail.com password=foo notes="test note" url="google.com/login" name="google.com"
+vault write passvault/test/passwords/code/gitlab.com username=test password=foo url=gitlab.com name="gitlab.com"

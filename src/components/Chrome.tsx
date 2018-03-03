@@ -6,11 +6,11 @@ import "./Chrome.scss";
 export default class extends React.Component {
   public render() {
     return (
-      <div className="chrome" style={{"overflow-y": "scroll"}}>
+      <div className="chrome" style={{overflowY: "scroll"}}>
         <nav>
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="right">
-            <li className="settings">
+            <li className="settings" key="settings">
               <a href={Config.PAGE_SETTINGS}>
                 <i className="large material-icons black-text">settings</i>
               </a>

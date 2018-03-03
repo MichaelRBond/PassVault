@@ -9,7 +9,7 @@ const logger = new Logger("PassVaultIcon");
 interface ComponentProps {
   type: string;
   folder: string;
-  secret: string;
+  secret: Secret;
   passvault: PassVaultModel;
   title?: string;
 }
@@ -22,7 +22,7 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
   public static defaultProps: ComponentProps = {
     type: "",
     folder: "",
-    secret: "",
+    secret: null, // TODO: Convert to optional
     passvault: undefined,
     title: "",
   };
@@ -33,37 +33,31 @@ export default class PassVaultIcon extends React.Component<ComponentProps, Compo
     };
 
     this.render = this.render.bind(this);
-    this.clickIcon = this.clickIcon.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   public render() {
     return (
       <div className="col s1 left-align min-40">
         <a className="btn-floating waves-effect waves-light btn-small">
-          <i className="material-icons" title={this.props.title} onClick={this.clickIcon}>{this.state.icon}</i>
+          <i className="material-icons" title={this.props.title} onClick={this.handleClick}>{this.state.icon}</i>
         </a>
       </div>
     );
   }
 
-  private async clickIcon(): Promise<void> {
-    const result = await this.props.passvault.getPassword(`${this.props.folder}${this.props.secret}`);
-    this.handleClick(result);
-    return;
-  }
-
-  private handleClick(result: Secret): void {
+  private handleClick(): void {
     switch (this.props.type) {
       case "password":
-        return copyStringToClipboard(result.password);
+        return copyStringToClipboard(this.props.secret.password);
       case "user":
-        return copyStringToClipboard(result.username);
+        return copyStringToClipboard(this.props.secret.username);
       case "edit":
         let folder = this.props.folder;
         if (/\/$/.test(folder)) {
           folder = folder.substring(0, folder.length - 1);
         }
-        changeWindowLocation(`${Config.PAGE_SECRET}?&folder=${folder}&secret=${this.props.secret}`);
+        changeWindowLocation(`${Config.PAGE_SECRET}?&folder=${folder}&secret=${this.props.secret.name}`);
         break;
       default:
         logger.error("Invalid event type");

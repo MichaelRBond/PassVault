@@ -69,12 +69,18 @@ export class PassVaultModel {
     return(result);
   }
 
-  public async getSecretNamesFromFolder(folder: string): Promise<string[]> {
-    return this.vault.list(`${this.getBaseUrl()}/${PassVaultModel.FOLDERS}/${folder}`, this.token);
+  public async getSecretsFromFolder(folder: string): Promise<Secret[]> {
+    const secretNames = await this.vault.list(`${this.getBaseUrl()}/${PassVaultModel.FOLDERS}/${folder}`, this.token);
+    const secrets: Secret[] = [];
+    for (const name of secretNames) {
+      const secret = await this.getSecret(`${folder}${name}`);
+      secrets.push(secret);
+    }
+    return secrets;
   }
 
   // TODO : SHould return an optional
-  public async getPassword(secretPath: string): Promise<Secret> {
+  public async getSecret(secretPath: string): Promise<Secret> {
     const url = `${this.getBaseUrl()}/${PassVaultModel.FOLDERS}/${secretPath}`;
     const secret = await this.vault.read<Secret>(url, this.token);
     // TODO : if we get null/optional absent back from this.read() return an empty optional
@@ -82,7 +88,7 @@ export class PassVaultModel {
   }
 
   // TODO : don't return axios response
-  public savePassword(password: Secret, folder: string): Promise<AxiosResponse> {
+  public saveSecret(password: Secret, folder: string): Promise<AxiosResponse> {
     if (isBlank(folder)) {
       folder = "default";
     }

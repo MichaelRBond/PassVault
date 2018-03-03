@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Config} from "../../config";
-import {PassVaultModel} from "../../models/passvault";
+import {PassVaultModel, Secret} from "../../models/passvault";
 import { PassVaultEvent } from "../../models/passvault-event";
 import {changeWindowLocation} from "../../utils/browser";
 import {favoritesDelimiter} from "../../utils/passvault";
@@ -13,6 +13,7 @@ interface SearchResults {
   key: string;
   folder: string;
   fullPath: string;
+  secret: Secret;
 }
 
 interface ComponentProps {
@@ -41,16 +42,14 @@ export default class extends React.Component<ComponentProps, ComponentState> {
   }
 
   public async componentDidMount(): Promise<void> {
-    const [favorites, notes, folders] = await Promise.all([
-      this.getFavorites(),
-      this.getNotes(),
-      this.getFolders(),
-    ]);
+    const favorites = await this.getFavorites();
+    const notes = await this.getNotes();
+    const folders = await this.getFoldersList();
     this.setState({
       ...this.state,
       favorites,
-      notes,
       folders,
+      notes,
     });
   }
 
@@ -87,7 +86,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
     const folders = await this.props.passvault.getFolders();
 
     const listPromises = folders.map((folder) => {
-      return this.props.passvault.getSecretNamesFromFolder(folder);
+      return this.props.passvault.getSecretsFromFolder(folder);
     });
 
     const listResponses = await Promise.all(listPromises);
@@ -99,9 +98,10 @@ export default class extends React.Component<ComponentProps, ComponentState> {
       }, [])
       .map((r, i) => {
         return {
-          key: r,
+          secret: r,
+          key: r.name,
           folder: folders[i],
-          fullPath: `passwords/${folders[i]}${r}`,
+          fullPath: `passwords/${folders[i]}${r.name}`,
         };
       });
 
@@ -121,13 +121,14 @@ export default class extends React.Component<ComponentProps, ComponentState> {
 
     if (this.state.searchResults) {
       searchResults = (
-        <div>
-        {this.state.searchResults.map((results) => {
-          return <PassVaultSecret
-            folder={results.folder}
-            secret={results.key}
-            passvault={this.props.passvault}
-          />;
+        <div key="searchResults">
+        {this.state.searchResults.map((result) => {
+            return <PassVaultSecret
+              folder={result.folder}
+              secret={result.secret}
+              passvault={this.props.passvault}
+              key={result.folder}
+            />;
         })}
         </div>
       );
@@ -183,35 +184,42 @@ export default class extends React.Component<ComponentProps, ComponentState> {
   // TODO : Type return better
   private async getFavorites(): Promise<any> {
     const favorites = await this.props.passvault.getFavorites();
-    return favorites.map((fav) => {
-      const [folder, secret] = fav.split(favoritesDelimiter);
+    const favoritesPromises = favorites.map(async (fav) => {
+      const [folder, secretName] = fav.split(favoritesDelimiter);
+      const secret = await this.props.passvault.getSecret(`${folder}${secretName}`);
       return (
         <PassVaultSecret
           folder={folder}
           secret={secret}
           passvault={this.props.passvault}
-        />
-        );
-      });
-    }
+       />
+      );
+    });
+    return await Promise.all(favoritesPromises);
+  }
 
   // TODO : Type return better
-  private async getFolders(): Promise<any> {
+  private async getFoldersList(): Promise<any> {
     const folders = await this.props.passvault.getFolders();
     const folderPromises = folders.map(async (folder) => {
-      const secrets = await this.props.passvault.getSecretNamesFromFolder(folder);
+      const secrets = await this.props.passvault.getSecretsFromFolder(folder);
       return (
-          <li>
-            <div className="collapsible-header"><i className="material-icons prefix teal-text">folder</i>{folder}</div>
+          <li key={`${folder}-li`}>
+            <div
+              className="collapsible-header"
+              key={`${folder}-header`}
+            >
+              <i className="material-icons prefix teal-text">folder</i>{folder}
+            </div>
             <div className="collapsible-body" key={folder}>
               {
                 secrets.map((secret) => {
                   return (
                     <PassVaultSecret
-                    folder={folder}
-                    secret={secret}
-                    passvault={this.props.passvault}
-                  />
+                      folder={folder}
+                      secret={secret}
+                      passvault={this.props.passvault}
+                    />
                   );
                 })
               }
@@ -219,8 +227,7 @@ export default class extends React.Component<ComponentProps, ComponentState> {
           </li>
       );
     });
-    const ret = await Promise.all(folderPromises);
-    return ret;
+    return await Promise.all(folderPromises);
   }
 
   private async getNotes(): Promise<string> {

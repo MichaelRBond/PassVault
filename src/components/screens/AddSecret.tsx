@@ -67,16 +67,16 @@ export default class AddSecret extends React.Component<ComponentProps, Component
 
   public async componentDidMount() {
     const locationHash = getLocationHash();
-    const secret = QueryString.parse(locationHash).secret;
+    const secretName = QueryString.parse(locationHash).secret;
     const folder = QueryString.parse(locationHash).folder;
 
-    if (isBlank(secret) || isBlank(folder)) {
+    if (isBlank(secretName) || isBlank(folder)) {
       return;
     }
 
     const [password, favorite] = await Promise.all([
-      this.props.passvault.getPassword(`${folder}/${secret}`),
-      this.props.passvault.secretIsFavorite(folder, secret),
+      this.props.passvault.getSecret(`${folder}/${secretName}`),
+      this.props.passvault.secretIsFavorite(folder, secretName),
     ]);
     // TODO : check to make sure that we a password back
     this.setState({
@@ -262,7 +262,7 @@ export default class AddSecret extends React.Component<ComponentProps, Component
       password: this.state.password,
       notes: this.state.notes,
     };
-    await this.props.passvault.savePassword(secret, this.state.folder);
+    await this.props.passvault.saveSecret(secret, this.state.folder);
     changeWindowLocation(Config.PAGE_MAIN);
     return;
   }
