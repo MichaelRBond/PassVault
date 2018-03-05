@@ -1,5 +1,7 @@
 import { AxiosResponse } from "axios";
 import { isNullOrUndefined } from "util";
+import {Config} from "../config";
+import {changeWindowLocation, localStorageRemoveItem} from "../utils/browser";
 import { isBlank } from "../utils/helpers";
 import { buildFavoritesPath } from "../utils/passvault";
 import Vault from "../vault";
@@ -36,8 +38,17 @@ export class PassVaultModel {
     const token = await this.vault.login(this.url, username, password);
     this.username = username;
     this.token = token;
-    // TODO : if toekn is empty, return false
+    // TODO : if token is empty, return false
     return true;
+  }
+
+  public logout(): void {
+    this.token = null;
+    localStorageRemoveItem("__passvault_vault_token");
+    localStorageRemoveItem("__passvault_vault_username");
+    localStorageRemoveItem("__passvault_vault_password");
+    changeWindowLocation(Config.PAGE_LOGIN);
+    return;
   }
 
   public isAuthenticated(): boolean {

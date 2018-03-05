@@ -10,6 +10,7 @@ import AddSecret from "./screens/AddSecret";
 import LoginScreen from "./screens/LoginScreen";
 import MainScreen from "./screens/MainScreen";
 import PasswordGenerator from "./screens/PasswordGenerator";
+import Settings from "./screens/Settings";
 import WelcomeScreen from "./screens/WelcomeScreen";
 
 interface ComponentProps {
@@ -77,6 +78,9 @@ export default class PassVault extends React.Component<ComponentProps, Component
             </Route>
             <Route path="/saveSecret" key="saveSecret">
               <AddSecret passvault={this.props.passvault} />
+            </Route>
+            <Route path="/settings" key="saveSecret">
+              <Settings passvault={this.props.passvault} />
             </Route>
           </Switch>
         </Chrome>

@@ -33,12 +33,15 @@ export default class extends React.Component<ComponentProps, ComponentState> {
 
   constructor(props: ComponentProps) {
     super(props);
+
     this.state = {
       favorites: "Loading ...",
       notes: "Loading ...",
       folders: "Loading ...",
       searchResults: null,
     };
+
+    this.render = this.render.bind(this);
   }
 
   public async componentDidMount(): Promise<void> {
@@ -116,6 +119,11 @@ export default class extends React.Component<ComponentProps, ComponentState> {
   }
 
   public render() {
+
+    if (!this.props.passvault.isAuthenticated()) {
+      changeWindowLocation(Config.PAGE_START);
+    }
+
     let searchResults = null;
     let menuList = null;
 

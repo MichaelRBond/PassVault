@@ -59,6 +59,11 @@ export function localStorageGetItem(key: string): any {
   return window.localStorage.getItem(key);
 }
 
+export function localStorageRemoveItem(key: string): void {
+  window.localStorage.removeItem(key);
+  return;
+}
+
 export function getLocationHash(): string {
   return window.location.hash;
 }
