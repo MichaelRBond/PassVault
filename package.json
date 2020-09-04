@@ -58,7 +58,7 @@
     "materialize": "^1.0.0",
     "materialize-css": "^0.100.2",
     "materialize-loader": "^2.0.2",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.13.1",
     "query-string": "^5.1.0",
     "react-bootstrap": "^0.32.1",
     "react-router": "^4.2.0",
